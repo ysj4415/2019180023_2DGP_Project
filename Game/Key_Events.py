@@ -3,14 +3,14 @@ from pico2d import *
 Ongame = True
 LEFT_KEY = False
 RIGHT_KEY = False
-JUMP = False
+JUMP_KEY = False
 
 
 def key_events():
     global Ongame
     global LEFT_KEY
     global RIGHT_KEY
-    global JUMP
+    global JUMP_KEY
     events = get_events()
     for event in events:
         # esc key
@@ -28,6 +28,6 @@ def key_events():
             RIGHT_KEY = False
         # jump key(space)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            JUMP = True
+            JUMP_KEY = True
         elif event.type == SDL_KEYUP and event.key == SDLK_SPACE:
-            JUMP = False
+            JUMP_KEY = False
