@@ -1,8 +1,11 @@
 from pico2d import *
-import Key_Events
 import math
 
 ground = 32
+
+LEFT_KEY = False
+RIGHT_KEY = False
+JUMP_KEY = False
 
 def jumprange(jumpradian, jumppower):
     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi)
@@ -23,20 +26,20 @@ class Charater:
         if self.jumpradian== 0 or self.y < ground:
             self.onair = False
     def update(self):
-        if Key_Events.LEFT_KEY == True:
+        if LEFT_KEY == True:
             self.flip = 'h'
             self.anim[0] = 4
             self.anim[1] = 8
             if self.x > 5 :  self.x -= self.speed
-        elif Key_Events.RIGHT_KEY == True:
+        elif RIGHT_KEY == True:
             self.flip = '0'
             self.anim[0] = 4
             self.anim[1] = 8
             if self.x < 795 : self.x += self.speed
-        elif Key_Events.LEFT_KEY == False and Key_Events.RIGHT_KEY == False:
+        elif LEFT_KEY == False and RIGHT_KEY == False:
             self.anim[0] = 5
             self.anim[1] = 7
-        if Key_Events.JUMP_KEY == True:
+        if JUMP_KEY == True:
             if self.onair == False :
                 self.onair = True
 
