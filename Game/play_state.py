@@ -47,3 +47,9 @@ def handle_events():
             charater.JUMP_KEY = True
         elif event.type == pico2d.SDL_KEYUP and event.key == pico2d.SDLK_SPACE:
             charater.JUMP_KEY = False
+
+def pause():
+    pass
+
+def resume():
+    pass

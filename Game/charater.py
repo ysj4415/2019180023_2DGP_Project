@@ -1,4 +1,5 @@
 from pico2d import *
+import window_size
 import math
 
 ground = 32
@@ -25,22 +26,28 @@ class Charater:
         self.jumpradian = (self.jumpradian + 10) % 180
         if self.jumpradian== 0 or self.y < ground:
             self.onair = False
+
+    def wall_move(self, direction):
+            if(direction == 'left'):
+                pass
+            if(direction == 'right'):
+                pass
+
     def update(self):
         if LEFT_KEY == True:
             self.flip = 'h'
             self.anim[0] = 4
             self.anim[1] = 8
-            if self.x > 5 :  self.x -= self.speed
+            if self.x > 0 + 5 :  self.x -= self.speed
         elif RIGHT_KEY == True:
             self.flip = '0'
             self.anim[0] = 4
             self.anim[1] = 8
-            if self.x < 795 : self.x += self.speed
+            if self.x < window_size.width - 5 : self.x += self.speed
         elif LEFT_KEY == False and RIGHT_KEY == False:
             self.anim[0] = 5
             self.anim[1] = 7
-        if JUMP_KEY == True:
-            if self.onair == False :
+        if JUMP_KEY == True and self.onair == False:
                 self.onair = True
 
         if self.onair == True:
@@ -48,8 +55,14 @@ class Charater:
             self.anim[1] = 8
             self.jump()
 
+            dir = ''
+            if self.x > 0 + 5: dir = 'left'
+            elif self.x < window_size.width - 5 : dir = 'right'
+
+            if(dir != '') : self.wall_move(dir)
 
         self.frame = (self.frame + 1) % self.anim[1]
+
 
     def draw(self):
         # self.image.clip_draw(self.frame*64, self.anim[0] * 64, 64, 64, self.x, self.y + jumprange(self.jumpradian, self.jumppower))
