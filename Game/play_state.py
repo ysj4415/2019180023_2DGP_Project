@@ -33,20 +33,7 @@ def handle_events():
         if event.key == pico2d.SDLK_ESCAPE:
             game_framework.quit()
         # left key
-        elif event.type == pico2d.SDL_KEYDOWN and event.key == pico2d.SDLK_LEFT:
-            charater.LEFT_KEY = True
-        elif event.type == pico2d.SDL_KEYUP and event.key == pico2d.SDLK_LEFT:
-            charater.LEFT_KEY = False
-        # right key
-        elif event.type == pico2d.SDL_KEYDOWN and event.key == pico2d.SDLK_RIGHT:
-            charater.RIGHT_KEY = True
-        elif event.type == pico2d.SDL_KEYUP and event.key == pico2d.SDLK_RIGHT:
-            charater.RIGHT_KEY = False
-        # jump key(space)
-        elif event.type == pico2d.SDL_KEYDOWN and event.key == pico2d.SDLK_SPACE:
-            charater.JUMP_KEY = True
-        elif event.type == pico2d.SDL_KEYUP and event.key == pico2d.SDLK_SPACE:
-            charater.JUMP_KEY = False
+        nom.handle_event(event)
 
 def pause():
     pass
