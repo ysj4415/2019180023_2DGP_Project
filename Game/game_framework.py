@@ -52,7 +52,6 @@ def run(start_state):
         stack[-1].handle_events()
         stack[-1].update()
         stack[-1].draw()
-        pico2d.delay(0.05)
 
     while(len(stack) > 0):
         stack[-1].exit_state()
