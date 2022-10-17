@@ -7,10 +7,8 @@ RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE_DOWN, SPACE_UP = range(6)
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
-    (SDL_KEYDOWN, SDLK_SPACE): SPACE_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
-    (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
-    (SDL_KEYUP, SDLK_SPACE): SPACE_UP
+    (SDL_KEYUP, SDLK_LEFT): LEFT_UP
 }
 
 
@@ -26,19 +24,22 @@ def jumprange(jumpradian, jumppower, index):
 class IdleState:
     def enter(nom, event):
         if event == RIGHT_DOWN:
-            nom.flip = ''
-            nom.anim[0] = 4
-            nom.anim[1] = 8
+            nom.dir+=1
         elif event == LEFT_DOWN:
-            nom.flip = 'h'
+            nom.dir-=1
+        elif event ==  RIGHT_UP:
+            nom.dir-=1
+        elif event == LEFT_UP:
+            nom.dir+=1
+
+        if nom.dir == 0:
+            nom.anim[0] = 5
+            nom.anim[1] = 7
+        else:
+            if nom.dir < 0 : nom.flip = 'h'
+            elif nom.dir > 0 : nom.flip = ''
             nom.anim[0] = 4
             nom.anim[1] = 8
-        elif event ==  RIGHT_UP:
-            nom.anim[0] = 5
-            nom.anim[1] = 7
-        elif event == LEFT_UP:
-            nom.anim[0] = 5
-            nom.anim[1] = 7
         nom.timer = 1000
     def exit(nom, event):
         pass
@@ -55,25 +56,29 @@ class IdleState:
 class RunState:
     def enter(nom, event):
         if event == RIGHT_DOWN:
+            nom.dir+=1
             nom.flip = ''
-            nom.anim[0] = 4
-            nom.anim[1] = 8
         elif event == LEFT_DOWN:
+            nom.dir-=1
             nom.flip = 'h'
+        elif event ==  RIGHT_UP:
+            nom.dir-=1
+        elif event == LEFT_UP:
+            nom.dir+=1
+
+        if nom.dir == 0:
+            nom.anim[0] = 5
+            nom.anim[1] = 7
+        else:
+            if nom.dir < 0 : nom.flip = 'h'
+            elif nom.dir > 0 : nom.flip = ''
             nom.anim[0] = 4
             nom.anim[1] = 8
-        elif event ==  RIGHT_UP:
-            nom.anim[0] = 5
-            nom.anim[1] = 7
-        elif event == LEFT_UP:
-            nom.anim[0] = 5
-            nom.anim[1] = 7
     def exit(nom, event):
         pass
     def do(nom):
         nom.frame = (nom.frame + 1) % nom.anim[1]
-        if nom.flip == '' : nom.move(1)
-        else : nom.move(-1)
+        nom.move(nom.dir)
 
     def draw(nom):
         f_index = (nom.floor_index + 1) % 4
@@ -103,6 +108,7 @@ class Charater:
         self.onair = False
         self.flip = ''
         self.floor_index = 0
+        self.dir = 0
 
         self.event_que = []
         self.cur_state = IdleState
@@ -167,30 +173,27 @@ class Charater:
 
 
 
-        # if JUMP_KEY == True and self.onair == False:
-        #     self.onair = True
-        #
-        # if self.onair == True:
-        #     self.anim[0] = 3
-        #     self.anim[1] = 8
-        #     self.jump()
-        #
-        #     dir = ''
-        #     moveline = self.x * x_tuple[self.floor_index % 2] + self.y * y_tuple[self.floor_index % 2]
-        #     moveindex = x_tuple[self.floor_index] + y_tuple[self.floor_index]
-        #     move_winsize = window_size.width * x_tuple[self.floor_index % 2] + window_size.height * y_tuple[self.floor_index % 2]
-        #
-        #     if moveline == (0 + self.speed * moveindex) % move_winsize:
-        #         dir = 'left'
-        #     elif moveline == (0 - self.speed * moveindex) % move_winsize:
-        #         dir = 'right'
-        #
-        #     if(dir != '') :
-        #         self.wall_move(dir)
-        #         self.onair = False
-        #         self.jumpradian = 0
-        #
-        # self.frame = (self.frame + 1) % self.anim[1]
+
+        if self.onair == True:
+            self.anim[0] = 3
+            self.anim[1] = 8
+            self.jump()
+
+            dir = ''
+            moveline = self.x * x_tuple[self.floor_index % 2] + self.y * y_tuple[self.floor_index % 2]
+            moveindex = x_tuple[self.floor_index] + y_tuple[self.floor_index]
+            move_winsize = window_size.width * x_tuple[self.floor_index % 2] + window_size.height * y_tuple[self.floor_index % 2]
+
+            if moveline == (0 + self.speed * moveindex) % move_winsize:
+                dir = 'left'
+            elif moveline == (0 - self.speed * moveindex) % move_winsize:
+                dir = 'right'
+
+            if(dir != '') :
+                self.wall_move(dir)
+                self.onair = False
+                self.jumpradian = 0
+
 
 
     def draw(self):
@@ -200,6 +203,8 @@ class Charater:
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+        if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+            self.onair == True
 
 
 
