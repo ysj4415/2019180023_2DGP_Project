@@ -2,7 +2,7 @@ from pico2d import *
 import math
 import window_size
 
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE_DOWN, SPACE_UP = range(6)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE_DOWN, SPACE_UP, END_JUMP_STOP, END_JUMP_MOVE = range(8)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -31,7 +31,7 @@ class MainState:
             nom.dir-=1
         elif event == LEFT_UP:
             nom.dir+=1
-
+        nom.dir = clamp(-1, nom.dir, 1)
     def exit(nom):
         pass
     def do(nom):
@@ -45,19 +45,19 @@ class MainState:
                                         64, 64, nom.rotation_radian, nom.flip,
                                        nom.x + jumprange(nom.jumpradian, nom.jumppower, x_tuple[f_index]),
                                        nom.y + jumprange(nom.jumpradian, nom.jumppower, y_tuple[f_index]), 64, 64)
-    pass
 
 class IdleState:
     def enter(nom, event):
         MainState.enter(nom, event)
-        if nom.dir == 0:
-            nom.anim[0] = 5
-            nom.anim[1] = 7
+
+        nom.anim[0] = 5
+        nom.anim[1] = 7
 
     def exit(nom):
         MainState.exit(nom)
         pass
     def do(nom):
+        print('dd')
         MainState.do(nom)
 
     def draw(nom):
@@ -98,8 +98,7 @@ class JumpState:
         nom.anim[1] = 7
     def do(nom):
         MainState.do(nom)
-
-        nom.jump()
+        if nom.jump() == True: return 0
 
         dir = ''
         moveline = nom.x * x_tuple[nom.floor_index % 2] + nom.y * y_tuple[nom.floor_index % 2]
@@ -114,8 +113,9 @@ class JumpState:
         if(dir != '') :
             nom.wall_move(dir)
             nom.jumpradian = 0
-            nom.cur_state.exit(nom)
-            nom.cur_state = IdleState
+            nom.empty_event_que()
+            if nom.dir == 0: nom.add_event(END_JUMP_STOP)
+            elif nom.dir != 0: nom.add_event(END_JUMP_MOVE)
     def draw(nom):
         MainState.draw(nom)
 
@@ -129,5 +129,6 @@ next_state_table = {
                SPACE_DOWN: JumpState, SPACE_UP: RunState},
     JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState,
                 LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState,
-               SPACE_DOWN: JumpState, SPACE_UP: JumpState}
+                SPACE_DOWN: JumpState, SPACE_UP: JumpState,
+                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState}
 }
