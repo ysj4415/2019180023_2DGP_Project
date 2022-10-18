@@ -27,7 +27,6 @@ class Charater:
 
     def jump(self):
         self.jumpradian = (self.jumpradian + 500 * self.frame_time//1) % 180
-        print(self.frame_time)
         f_index = (self.floor_index + 1) % 4
         jump_range = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index] + y_tuple[f_index])
 
@@ -71,7 +70,7 @@ class Charater:
 
     def update(self, frame_time):
         self.frame_time = frame_time
-        self.speed = 400 * frame_time
+        self.speed = 300 * frame_time
         self.cur_state.do(self)
 
         if firering.damagebox[0][0] <= self.x <= firering.damagebox[1][0] and firering.damagebox[0][1] <= self.y + jumprange(self.jumpradian, self.jumppower, 1) <= firering.damagebox[1][1]:

@@ -7,16 +7,19 @@ import game_framework
 nom = None
 ring = None
 running = None
+image = None
 
 # 초기화
 def enter():
     global nom
     global ring
     global running
+    global image
+
     nom = charater.Charater()
     ring = firering.FireRing(600,50)
     running = True
-
+    image = pico2d.load_image('res/map/map1.png')
 # 종료
 def exit_state():
     global nom
@@ -29,6 +32,7 @@ def update(frame_time):
 
 def draw():
     pico2d.clear_canvas()
+    image.draw(400,300)
     nom.draw()
     ring.draw()
     pico2d.update_canvas()
