@@ -3,6 +3,8 @@ import math
 import window_size
 
 RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE_DOWN, SPACE_UP, END_JUMP_STOP, END_JUMP_MOVE = range(8)
+X_DOWN, X_UP = 8,9
+DAMAGE = 10
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -10,13 +12,16 @@ key_event_table = {
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
     (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
     (SDL_KEYDOWN, SDLK_SPACE): SPACE_DOWN,
-    (SDL_KEYUP, SDLK_SPACE): SPACE_UP
+    (SDL_KEYUP, SDLK_SPACE): SPACE_UP,
+    (SDL_KEYDOWN, SDLK_x): X_DOWN,
 }
 
 x_tuple = (1,0,-1,0)
 y_tuple = (0,1,0,-1)
 
 ground = 32
+
+frame = None
 
 def jumprange(jumpradian, jumppower, index):
     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
@@ -32,10 +37,13 @@ class MainState:
         elif event == LEFT_UP:
             nom.dir+=1
         nom.dir = clamp(-1, nom.dir, 1)
+        global frame
+        frame = 0
     def exit(nom):
         pass
     def do(nom):
-        nom.frame = (nom.frame + 1) % nom.anim[1]
+        global frame
+        nom.frame = (frame // 50) % nom.anim[1]
         nom.move(nom.dir)
 
     def draw(nom):
@@ -48,6 +56,7 @@ class MainState:
 
 class IdleState:
     def enter(nom, event):
+
         MainState.enter(nom, event)
 
         nom.anim[0] = 5
@@ -57,8 +66,9 @@ class IdleState:
         MainState.exit(nom)
         pass
     def do(nom):
-        print('dd')
+        global frame
         MainState.do(nom)
+        frame += 1
 
     def draw(nom):
         MainState.draw(nom)
@@ -67,7 +77,9 @@ class IdleState:
 class RunState:
 
     def enter(nom, event):
+
         MainState.enter(nom, event)
+
         if nom.dir < 0:
             nom.flip = 'h'
         elif nom.dir > 0:
@@ -80,7 +92,9 @@ class RunState:
         pass
 
     def do(nom):
+        global frame
         MainState.do(nom)
+        frame += 2
 
     def draw(nom):
         MainState.draw(nom)
@@ -97,7 +111,10 @@ class JumpState:
         nom.anim[0] = 5
         nom.anim[1] = 7
     def do(nom):
+        global frame
         MainState.do(nom)
+        frame += 2
+
         if nom.jump() == True: return 0
 
         dir = ''
@@ -120,15 +137,77 @@ class JumpState:
         MainState.draw(nom)
 
 
+class AttackState:
+    def enter(nom, event):
+        global frame
+        MainState.enter(nom, event)
+        dir = 0
+        nom.anim[0] = 1
+        nom.anim[1] = 3
+        frame = 0
+
+    def exit(nom):
+        MainState.exit(nom)
+        pass
+    def do(nom):
+        global frame
+        nom.frame = frame//50
+        frame += 1
+        if nom.frame > 2:
+            if nom.dir == 0: nom.add_event(END_JUMP_STOP)
+            elif nom.dir != 0: nom.add_event(END_JUMP_MOVE)
+
+        # MainState.do(nom)
+
+    def draw(nom):
+        MainState.draw(nom)
+class HitState:
+    def enter(nom, event):
+        global frame
+        MainState.enter(nom, event)
+        dir = 0
+        nom.anim[0] = 0
+        nom.anim[1] = 2
+        frame = 0
+
+    def exit(nom):
+        MainState.exit(nom)
+        pass
+    def do(nom):
+        global frame
+        nom.frame = (frame//20) % 2
+        frame += 1
+        if frame//20 > 2 * 8:
+            if nom.dir == 0: nom.add_event(END_JUMP_STOP)
+            elif nom.dir != 0: nom.add_event(END_JUMP_MOVE)
+
+        # MainState.do(nom)
+
+    def draw(nom):
+        MainState.draw(nom)
+
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
                 RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
-                SPACE_DOWN: JumpState, SPACE_UP: IdleState},
+                SPACE_DOWN: JumpState, SPACE_UP: IdleState,
+                X_DOWN: AttackState, X_UP: AttackState,
+                DAMAGE: HitState},
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState,
                 LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
-               SPACE_DOWN: JumpState, SPACE_UP: RunState},
+               SPACE_DOWN: JumpState, SPACE_UP: RunState,
+                X_DOWN: AttackState, X_UP: AttackState,
+                DAMAGE: HitState},
     JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState,
                 LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState,
                 SPACE_DOWN: JumpState, SPACE_UP: JumpState,
-                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState}
+                X_DOWN: JumpState, DAMAGE: HitState,
+                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState},
+    AttackState: {RIGHT_UP: AttackState, LEFT_UP: AttackState,
+                LEFT_DOWN: AttackState, RIGHT_DOWN: AttackState,
+                SPACE_DOWN: AttackState, SPACE_UP: AttackState,
+                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState, X_DOWN: AttackState},
+HitState: {RIGHT_UP: HitState, LEFT_UP: HitState,
+                LEFT_DOWN: HitState, RIGHT_DOWN: HitState,
+                SPACE_DOWN: HitState, SPACE_UP: HitState,
+                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState, X_DOWN: HitState}
 }
