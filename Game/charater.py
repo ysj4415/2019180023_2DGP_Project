@@ -1,4 +1,5 @@
 from Character.CharacterController import *
+import firering
 
 class Charater:
     def __init__(self):
@@ -8,7 +9,7 @@ class Charater:
         self.anim = [5, 7]
         self.speed = 0
         self.jumpradian = 0
-        self.jumppower = 100
+        self.jumppower = 65
         self.rotation_radian = 0 / 360 * 2 * math.pi
         self.onair = False
         self.flip = ''
@@ -73,11 +74,16 @@ class Charater:
         self.speed = 400 * frame_time
         self.cur_state.do(self)
 
+        if firering.damagebox[0][0] <= self.x <= firering.damagebox[1][0] and firering.damagebox[0][1] <= self.y + jumprange(self.jumpradian, self.jumppower, 1) <= firering.damagebox[1][1]:
+            self.add_event(DAMAGE)
+
         if len(self.event_que) > 0:
             event = self.event_que.pop()
             self.cur_state.exit(self)
-            self.cur_state = next_state_table[self.cur_state][event]
+            if event in next_state_table[self.cur_state]: self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
+
+
 
 
     def draw(self):

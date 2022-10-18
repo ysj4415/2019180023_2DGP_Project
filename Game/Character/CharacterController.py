@@ -161,15 +161,19 @@ class AttackState:
 
     def draw(nom):
         MainState.draw(nom)
+
+dir = None
 class HitState:
     def enter(nom, event):
         global frame
+        global dir
         MainState.enter(nom, event)
-        dir = 0
+        dir = nom.dir
         nom.anim[0] = 0
         nom.anim[1] = 2
         frame = 0
-
+        nom.jumpradian = 0
+        nom.y = 32
     def exit(nom):
         MainState.exit(nom)
         pass
@@ -177,10 +181,11 @@ class HitState:
         global frame
         nom.frame = (frame//20) % 2
         frame += 1
-        if frame//20 > 2 * 8:
+        if frame//20 > 2 * 6:
             if nom.dir == 0: nom.add_event(END_JUMP_STOP)
             elif nom.dir != 0: nom.add_event(END_JUMP_MOVE)
-
+        elif frame//20 < 3:
+            nom.move(dir * -1)
         # MainState.do(nom)
 
     def draw(nom):
@@ -206,8 +211,7 @@ next_state_table = {
                 LEFT_DOWN: AttackState, RIGHT_DOWN: AttackState,
                 SPACE_DOWN: AttackState, SPACE_UP: AttackState,
                 END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState, X_DOWN: AttackState},
-HitState: {RIGHT_UP: HitState, LEFT_UP: HitState,
-                LEFT_DOWN: HitState, RIGHT_DOWN: HitState,
-                SPACE_DOWN: HitState, SPACE_UP: HitState,
-                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState, X_DOWN: HitState}
+    HitState:   {SPACE_DOWN: HitState, SPACE_UP: HitState,
+                END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState,
+                X_DOWN: HitState, DAMAGE: HitState}
 }
