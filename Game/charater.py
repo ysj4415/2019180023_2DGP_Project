@@ -21,6 +21,24 @@ class Charater:
         self.cur_state.enter(self, None)
         self.frame_time = None
 
+        self. life = 3
+
+    def restart(self):
+        self.x, self.y = window_size.width / 2, ground
+        self.jumpradian = 0
+        self.rotation_radian = 0 / 360 * 2 * math.pi
+        self.floor_index = 0
+        self. life = 3
+
+        self.speed = 0
+        self.flip = ''
+        self.anim = [5, 7]
+
+
+        self.event_que = []
+        self.cur_state = RunState
+        self.cur_state.enter(self, None)
+
     def add_event(self, event):
         self.event_que.insert(0,event)
 
@@ -74,7 +92,10 @@ class Charater:
         self.cur_state.do(self)
 
         if firering.damagebox[0][0] <= self.x <= firering.damagebox[1][0] and firering.damagebox[0][1] <= self.y + jumprange(self.jumpradian, self.jumppower, 1) <= firering.damagebox[1][1]:
-            self.add_event(DAMAGE)
+            self.life -= 1
+            if self.life == 0: self.restart()
+            else : self.add_event(DAMAGE)
+
 
         if len(self.event_que) > 0:
             event = self.event_que.pop()
