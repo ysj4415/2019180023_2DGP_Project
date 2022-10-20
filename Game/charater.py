@@ -1,6 +1,9 @@
 from Character.CharacterController import *
+import window_size
 import firering
 
+def jumprange(jumpradian, jumppower, index):
+    return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
 class Charater:
     def __init__(self):
         self.x, self.y = window_size.width / 2, ground
