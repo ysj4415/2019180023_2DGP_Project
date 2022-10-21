@@ -103,7 +103,10 @@ class Charater:
         if len(self.event_que) > 0:
             event = self.event_que.pop()
             self.cur_state.exit(self)
-            if event in next_state_table[self.cur_state]: self.cur_state = next_state_table[self.cur_state][event]
+
+
+            if event in next_state_table[self.cur_state]:
+                self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
 
 
@@ -115,4 +118,5 @@ class Charater:
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
-            self.add_event(key_event)
+            if key_event in next_state_table[self.cur_state]:
+                self.add_event(key_event)

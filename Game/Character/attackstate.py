@@ -5,15 +5,16 @@ frame = None
 
 class AttackState:
     def enter(nom, event):
-        global frame
-        mainstate.enter(nom, event)
-        dir = 0
-        nom.anim[0] = 1
-        nom.anim[1] = 3
-        frame = 0
+        mainstate.MainState.enter(nom, event)
+        if event == CC.X_DOWN:
+            global frame
+            # mainstate.MainState.enter(nom, event)
+            nom.anim[0] = 1
+            nom.anim[1] = 3
+            frame = 0
 
     def exit(nom):
-        mainstate.exit(nom)
+        mainstate.MainState.exit(nom)
         pass
     def do(nom):
         global frame
@@ -26,4 +27,4 @@ class AttackState:
         # MainState.do(nom)
 
     def draw(nom):
-        mainstate.draw(nom)
+        mainstate.MainState.draw(nom)

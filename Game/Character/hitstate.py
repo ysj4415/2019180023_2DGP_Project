@@ -6,15 +6,17 @@ frame = None
 
 class HitState:
     def enter(nom, event):
-        global frame
-        global dir
         ms.MainState.enter(nom, event)
-        dir = nom.dir
-        nom.anim[0] = 0
-        nom.anim[1] = 2
-        frame = 0
-        nom.jumpradian = 0
-        nom.y = 32
+        if event == CC.DAMAGE:
+            global frame
+            global dir
+            # ms.MainState.enter(nom, event)
+            dir = nom.dir
+            nom.anim[0] = 0
+            nom.anim[1] = 2
+            frame = 0
+            nom.jumpradian = 0
+            nom.y = 32
     def exit(nom):
         ms.MainState.exit(nom)
         pass
