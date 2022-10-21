@@ -1,12 +1,12 @@
-from Character import mainstate as ms
-from Character import CharacterController as CC
+from Character.CharacterController import mainstate
+from Character.CharacterController import CharacterController as CC
 import window_size
 
 frame = None
 
 class JumpState:
     def enter(nom, event):
-        ms.MainState.enter(nom, event)
+        mainstate.MainState.enter(nom, event)
         global frame
 
         nom.anim[0] = 3
@@ -14,12 +14,12 @@ class JumpState:
 
         frame = 0
     def exit(nom):
-        ms.MainState.exit(nom)
+        mainstate.MainState.exit(nom)
         nom.anim[0] = 5
         nom.anim[1] = 7
     def do(nom):
         global frame
-        ms.MainState.do(nom)
+        mainstate.MainState.do(nom)
         frame += 2
 
         if nom.jump() == True: return 0
@@ -41,4 +41,4 @@ class JumpState:
             if nom.dir == 0: nom.add_event(CC.END_JUMP_STOP)
             elif nom.dir != 0: nom.add_event(CC.END_JUMP_MOVE)
     def draw(nom):
-        ms.MainState.draw(nom)
+        mainstate.MainState.draw(nom)

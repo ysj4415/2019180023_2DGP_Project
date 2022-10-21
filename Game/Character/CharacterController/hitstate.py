@@ -1,12 +1,12 @@
-from Character import mainstate as ms
-from Character import CharacterController as CC
+from Character.CharacterController import mainstate
+from Character.CharacterController import CharacterController as CC
 
 dir = None
 frame = None
 
 class HitState:
     def enter(nom, event):
-        ms.MainState.enter(nom, event)
+        mainstate.MainState.enter(nom, event)
         if event == CC.DAMAGE:
             global frame
             global dir
@@ -18,7 +18,7 @@ class HitState:
             nom.jumpradian = 0
             nom.y = 32
     def exit(nom):
-        ms.MainState.exit(nom)
+        mainstate.MainState.exit(nom)
         pass
     def do(nom):
         global frame
@@ -32,4 +32,4 @@ class HitState:
         # MainState.do(nom)
 
     def draw(nom):
-        ms.MainState.draw(nom)
+        mainstate.MainState.draw(nom)

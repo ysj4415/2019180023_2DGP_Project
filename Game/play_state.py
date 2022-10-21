@@ -1,5 +1,5 @@
 import pico2d
-import charater
+from Character import character
 import firering
 import game_framework
 
@@ -16,7 +16,7 @@ def enter():
     global running
     global image
 
-    nom = charater.Charater()
+    nom = character.Character()
     ring = firering.FireRing(600,50)
     running = True
     image = pico2d.load_image('res/map/map1.png')

@@ -1,10 +1,11 @@
-from Character import mainstate as ms
+from Character.CharacterController import mainstate
+
 
 class RunState:
 
     def enter(nom, event):
 
-        ms.MainState.enter(nom, event)
+        mainstate.MainState.enter(nom, event)
 
         if nom.dir < 0:
             nom.flip = 'h'
@@ -14,11 +15,11 @@ class RunState:
         nom.anim[1] = 8
 
     def exit(nom):
-        ms.MainState.exit(nom)
+        mainstate.MainState.exit(nom)
         pass
 
     def do(nom):
-        ms.MainState.do(nom)
+        mainstate.MainState.do(nom)
 
     def draw(nom):
-        ms.MainState.draw(nom)
+        mainstate.MainState.draw(nom)

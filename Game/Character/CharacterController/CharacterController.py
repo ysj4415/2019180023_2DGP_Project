@@ -1,13 +1,10 @@
 from pico2d import *
-from Character import idlestate
-from Character import jumpstate
-from Character import runstate
-from Character import hitstate
-from Character import attackstate
+from Character.CharacterController import jumpstate, attackstate, runstate, idlestate, hitstate
 
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE_DOWN, SPACE_UP, END_JUMP_STOP, END_JUMP_MOVE = range(8)
-X_DOWN, X_UP = 8,9
-DAMAGE = 10
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP,\
+SPACE_DOWN, SPACE_UP, END_JUMP_STOP, END_JUMP_MOVE,\
+X_DOWN, X_UP, DAMAGE = range(11)
+
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,

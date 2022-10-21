@@ -1,5 +1,5 @@
-from Character import mainstate
-from Character import CharacterController as CC
+from Character.CharacterController import mainstate
+from Character.CharacterController import CharacterController as CC
 
 frame = None
 

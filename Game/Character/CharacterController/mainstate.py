@@ -1,4 +1,4 @@
-from Character import CharacterController as CC
+from Character.CharacterController import CharacterController as CC
 import math
 
 def jumprange(jumpradian, jumppower, index):

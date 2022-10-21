@@ -1,20 +1,19 @@
-from Character.CharacterController import *
+from Character.CharacterController.CharacterController import *
 import window_size
 import firering
 
 def jumprange(jumpradian, jumppower, index):
     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
-class Charater:
+class Character:
     def __init__(self):
         self.x, self.y = window_size.width / 2, ground
         self.frame = 0
-        self.image = load_image('PlayerCharacter.png')
+        self.image = load_image('res/character/PlayerCharacter.png')
         self.anim = [5, 7]
         self.speed = 0
         self.jumpradian = 0
         self.jumppower = 65
         self.rotation_radian = 0 / 360 * 2 * math.pi
-        self.onair = False
         self.flip = ''
         self.floor_index = 0
         self.dir = 0
