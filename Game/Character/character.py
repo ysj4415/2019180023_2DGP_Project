@@ -93,10 +93,21 @@ class Character:
         self.speed = 300 * frame_time
         self.cur_state.do(self)
 
-        if firering.damagebox[0][0] <= self.x <= firering.damagebox[1][0] and firering.damagebox[0][1] <= self.y + jumprange(self.jumpradian, self.jumppower, 1) <= firering.damagebox[1][1]:
-            self.life -= 1
-            if self.life == 0: self.restart()
-            else : self.add_event(DAMAGE)
+        y = self.y + jumprange(self.jumpradian, self.jumppower, 1)
+        for range in firering.damagebox:
+            print(range)
+            print(self.x)
+            print(y)
+
+
+            if range[0][0] <= self.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
+                self.life -= 1
+                if self.life == 0:
+                    self.restart()
+                else:
+                    self.add_event(DAMAGE)
+
+
 
 
         if len(self.event_que) > 0:

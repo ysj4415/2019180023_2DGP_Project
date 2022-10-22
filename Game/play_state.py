@@ -17,7 +17,7 @@ def enter():
     global image
 
     nom = character.Character()
-    ring = firering.FireRing(600,50)
+    ring = firering.FireRing(600,50, 0)
     running = True
     image = pico2d.load_image('res/map/map1.png')
 # 종료
