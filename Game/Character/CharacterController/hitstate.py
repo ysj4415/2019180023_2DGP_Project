@@ -4,6 +4,8 @@ from Character.CharacterController import CharacterController as CC
 dir = None
 frame = None
 
+char_dir = {'': -1, 'h': 1}
+
 class HitState:
     def enter(nom, event):
         mainstate.MainState.enter(nom, event)
@@ -32,7 +34,7 @@ class HitState:
             if nom.dir == 0: nom.add_event(CC.END_JUMP_STOP)
             elif nom.dir != 0: nom.add_event(CC.END_JUMP_MOVE)
         elif frame//20 < 3:
-            nom.move(dir * -1)
+            nom.move(char_dir[nom.flip])
         # MainState.do(nom)
 
     def draw(nom):

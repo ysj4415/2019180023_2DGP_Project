@@ -90,17 +90,16 @@ class Character:
             event = self.event_que.pop()
 
     def update(self, frame_time):
-        damagebox = firering.damagebox + spike.damagebox
-        y = self.y + jumprange(self.jumpradian, self.jumppower, 1)
-        for range in damagebox:
-            if range[0][0] <= self.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
-                self.add_event(DAMAGE)
-
         self.frame_time = frame_time
         self.speed = 300 * frame_time
 
         self.cur_state.do(self)
 
+        damagebox = firering.damagebox + spike.damagebox
+        y = self.y + jumprange(self.jumpradian, self.jumppower, 1)
+        for range in damagebox:
+            if range[0][0] <= self.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
+                if self.cur_state != HitState: self.add_event(DAMAGE)
 
         if len(self.event_que) > 0:
             event = self.event_que.pop()
