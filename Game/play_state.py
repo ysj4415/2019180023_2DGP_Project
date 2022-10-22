@@ -1,40 +1,48 @@
 import pico2d
 from Character import character
 import firering
+import spike
 import game_framework
 
 
 nom = None
 ring = None
+trap = None
 running = None
 image = None
+
 
 # 초기화
 def enter():
     global nom
     global ring
+    global trap
     global running
     global image
 
     nom = character.Character()
     ring = firering.FireRing(600,50, 0)
+    trap = spike.Spike(200, 15)
     running = True
     image = pico2d.load_image('res/map/map1.png')
 # 종료
 def exit_state():
     global nom
     global ring
+    global trap
     del nom
     del ring
+    del trap
 def update(frame_time):
     nom.update(frame_time)
     ring.update()
-
+    trap.update()
 def draw():
     pico2d.clear_canvas()
     image.draw(400,300)
     nom.draw()
     ring.draw()
+    trap.draw()
     pico2d.update_canvas()
 
 

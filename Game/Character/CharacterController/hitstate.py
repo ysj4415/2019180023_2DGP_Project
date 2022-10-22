@@ -17,6 +17,10 @@ class HitState:
             frame = 0
             nom.jumpradian = 0
             nom.y = 32
+
+            nom.life -= 1
+            if nom.life == 0:
+                nom.restart()
     def exit(nom):
         mainstate.MainState.exit(nom)
         pass

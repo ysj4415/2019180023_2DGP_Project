@@ -1,6 +1,7 @@
 from Character.CharacterController.CharacterController import *
 import window_size
 import firering
+import spike
 
 def jumprange(jumpradian, jumppower, index):
     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
@@ -89,32 +90,21 @@ class Character:
             event = self.event_que.pop()
 
     def update(self, frame_time):
+        damagebox = firering.damagebox + spike.damagebox
+        y = self.y + jumprange(self.jumpradian, self.jumppower, 1)
+        for range in damagebox:
+            if range[0][0] <= self.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
+                self.add_event(DAMAGE)
+
         self.frame_time = frame_time
         self.speed = 300 * frame_time
+
         self.cur_state.do(self)
-
-        y = self.y + jumprange(self.jumpradian, self.jumppower, 1)
-        for range in firering.damagebox:
-            print(range)
-            print(self.x)
-            print(y)
-
-
-            if range[0][0] <= self.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
-                self.life -= 1
-                if self.life == 0:
-                    self.restart()
-                else:
-                    self.add_event(DAMAGE)
-
-
 
 
         if len(self.event_que) > 0:
             event = self.event_que.pop()
             self.cur_state.exit(self)
-
-
             if event in next_state_table[self.cur_state]:
                 self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
