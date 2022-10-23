@@ -1,31 +1,30 @@
-from Character.CharacterController import mainstate
-from Character.CharacterController import CharacterController as CC
+from Object.CharacterController import mainstate
+from Object.CharacterController import CharacterController as CC
 import window_size
 
-frame = None
 
 class JumpState:
     def enter(nom, event):
         mainstate.MainState.enter(nom, event)
-        global frame
-
-        nom.anim[0] = 3
-        nom.anim[1] = 8
-
-        frame = 0
+        if(event == CC.SPACE_DOWN):
+            nom.frame_count = 0
+            nom.frame_speed = 30
+        nom.anim_type = 3
+        nom.frame_number = 8
     def exit(nom):
         mainstate.MainState.exit(nom)
-        nom.anim[0] = 5
-        nom.anim[1] = 7
+        nom.anim_type = 5
+        nom.frame_number = 7
     def do(nom):
-        global frame
         mainstate.MainState.do(nom)
-        frame += 2
 
         if nom.jump() == True: return 0
 
+        x = nom.position.translate.x
+        y = nom.position.translate.y
+
         dir = ''
-        moveline = nom.x * CC.x_tuple[nom.floor_index % 2] + nom.y * CC.y_tuple[nom.floor_index % 2]
+        moveline = x * CC.x_tuple[nom.floor_index % 2] + y * CC.y_tuple[nom.floor_index % 2]
         moveindex = CC.x_tuple[nom.floor_index] + CC.y_tuple[nom.floor_index]
         move_winsize = window_size.width * CC.x_tuple[nom.floor_index % 2] + window_size.height * CC.y_tuple[nom.floor_index % 2]
 

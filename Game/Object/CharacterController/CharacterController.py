@@ -1,5 +1,5 @@
 from pico2d import *
-from Character.CharacterController import jumpstate, attackstate, runstate, idlestate, hitstate
+from Object.CharacterController import jumpstate, attackstate, runstate, idlestate, hitstate
 
 RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP,\
 SPACE_DOWN, SPACE_UP, END_JUMP_STOP, END_JUMP_MOVE,\

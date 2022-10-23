@@ -1,0 +1,43 @@
+from Object.CharacterController import CharacterController as CC
+import math
+
+def jumprange(jumpradian, jumppower, index):
+    return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
+
+frame = None
+
+class MainState:
+    def enter(nom, event):
+        if event == CC.RIGHT_DOWN:
+            nom.dir+=1
+        elif event == CC.LEFT_DOWN:
+            nom.dir-=1
+        elif event ==  CC.RIGHT_UP:
+            nom.dir-=1
+        elif event == CC.LEFT_UP:
+            nom.dir+=1
+        nom.dir = CC.clamp(-1, nom.dir, 1)
+
+
+
+    def exit(nom):
+        pass
+    def do(nom):
+        frame = (nom.frame_count // nom.frame_speed) % nom.frame_number
+        nom.frame_count += 1
+        nom.image_info[0] = frame * nom.image_info[2]
+        nom.image_info[1] = nom.anim_type * nom.image_info[3]
+
+        nom.move(nom.dir)
+    def draw(nom):
+        f_index = (nom.floor_index + 1) % 4
+        x = nom.position.translate.x
+        y = nom.position.translate.y
+        size_x = nom.image_info[2] * nom.position.scale.x
+        size_y = nom.image_info[3] * nom.position.scale.y
+        nom.image.clip_composite_draw(nom.image_info[0], nom.image_info[1],
+                                        nom.image_info[2], nom.image_info[3],
+                                        nom.position.rotate, nom.flip,
+                                        x+ jumprange(nom.jumpradian, nom.jumppower, CC.x_tuple[f_index]),
+                                        y + jumprange(nom.jumpradian, nom.jumppower, CC.y_tuple[f_index]),
+                                                      size_x, size_y)
