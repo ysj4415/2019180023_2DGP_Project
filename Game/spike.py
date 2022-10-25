@@ -6,8 +6,8 @@ damagebox = []
 ground = 15
 
 class Spike(actor):
-    def __init__(self, x, y):
-        super().__init__(x, y)
+    def __init__(self, x, y, index):
+        super().__init__(x, y, index)
         self.image_info = [0, 0, 35, 30]
         self.loadimage('res/character/trap.png')
         self.makeDamageBox()

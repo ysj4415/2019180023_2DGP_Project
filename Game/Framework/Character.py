@@ -1,8 +1,7 @@
 from Framework.Pawn import *
 from Object.CharacterController.CharacterController import *
 import window_size
-x_tuple = (1,0,-1,0)
-y_tuple = (0,1,0,-1)
+
 def jumprange(jumpradian, jumppower, index):
     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
 
@@ -27,8 +26,8 @@ class character(pawn):
         else: return False
 
     def move(self, dir):
-        self.position.translate.x += self.speed * x_tuple[self.floor_index] * dir
-        self.position.translate.y += self.speed * y_tuple[self.floor_index] * dir
+        self.position.translate.x += self.speed * self.x_tuple[self.floor_index] * dir
+        self.position.translate.y += self.speed * self.y_tuple[self.floor_index] * dir
         self.position.translate.x = clamp(self.speed, self.position.translate.x, window_size.width - self.speed)
         self.position.translate.y = clamp(self.speed, self.position.translate.y, window_size.height - self.speed)
 

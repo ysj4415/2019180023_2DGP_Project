@@ -3,12 +3,16 @@ from Framework.Transform import *
 
 class actor:
     image = None
-
-    def __init__(self, x = 0, y = 0):
+    x_tuple = (1, 0, -1, 0)
+    y_tuple = (0, 1, 0, -1)
+    def __init__(self, x = 0, y = 0, floor_index = 0):
         self.position = transform(x, y)
         self.image_info = None
+        self.floor_index = floor_index
         self.flip = ''
-        self.floor_index = 0
+
+        self.position.rotate = floor_index * 90 / 360 * 2 * math.pi
+
     def __del__(self):
         pass
     def loadimage(self, image):
