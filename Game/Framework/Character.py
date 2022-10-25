@@ -1,4 +1,5 @@
 from Framework.Pawn import *
+from Object.CharacterController.CharacterController import *
 import window_size
 x_tuple = (1,0,-1,0)
 y_tuple = (0,1,0,-1)
@@ -20,7 +21,7 @@ class character(pawn):
         jump_range = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index] + y_tuple[f_index])
 
         if jump_range == 0 :
-            if self.dir == 0: self.add_event(END_JUMP_STOP)
+            if self.dir == 0: self.add_event(END_JUMP_STOP )
             elif self.dir != 0: self.add_event(END_JUMP_MOVE)
             return True
         else: return False
