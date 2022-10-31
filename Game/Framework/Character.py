@@ -11,19 +11,19 @@ class character(pawn):
 
         self.dir = 0
 
-        self.jumpradian = 0
-        self.jumppower = 65
-    def jump(self):
-
-        self.jumpradian = (self.jumpradian + 500 * self.frame_time//1) % 180
-        f_index = (self.floor_index + 1) % 4
-        jump_range = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index] + y_tuple[f_index])
-
-        if jump_range == 0 :
-            if self.dir == 0: self.add_event(END_JUMP_STOP )
-            elif self.dir != 0: self.add_event(END_JUMP_MOVE)
-            return True
-        else: return False
+        # self.jumpradian = 0
+        # self.jumppower = 65
+    # def jump(self):
+    #
+    #     self.jumpradian = (self.jumpradian + 500 * self.frame_time//1) % 180
+    #     f_index = (self.floor_index + 1) % 4
+    #     jump_range = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index] + y_tuple[f_index])
+    #
+    #     if jump_range == 0 :
+    #         if self.dir == 0: self.add_event(END_JUMP_STOP )
+    #         elif self.dir != 0: self.add_event(END_JUMP_MOVE)
+    #         return True
+    #     else: return False
 
     def move(self, dir):
         self.position.translate.x += self.speed * self.x_tuple[self.floor_index] * dir

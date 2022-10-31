@@ -2,6 +2,7 @@ from Object.CharacterController import mainstate
 from Object.CharacterController import CharacterController as CC
 
 class AttackState:
+    @staticmethod
     def enter(nom, event):
         mainstate.MainState.enter(nom, event)
         if event == CC.X_DOWN:
@@ -11,9 +12,11 @@ class AttackState:
             nom.frame_count = 0
         nom.frame_speed = 30
 
+    @staticmethod
     def exit(nom):
         mainstate.MainState.exit(nom)
         pass
+    @staticmethod
     def do(nom):
         frame = (nom.frame_count // nom.frame_speed) % nom.frame_number
         nom.frame_count += 1
@@ -25,6 +28,6 @@ class AttackState:
             elif nom.dir != 0: nom.add_event(CC.END_JUMP_MOVE)
 
         # MainState.do(nom)
-
+    @staticmethod
     def draw(nom):
         mainstate.MainState.draw(nom)

@@ -6,6 +6,7 @@ dir = None
 char_dir = {'': -1, 'h': 1}
 
 class HitState:
+    @staticmethod
     def enter(nom, event):
         mainstate.MainState.enter(nom, event)
         if event == CC.DAMAGE:
@@ -22,9 +23,12 @@ class HitState:
                 nom.restart()
             nom.frame_count = 0
             nom.frame_speed = 20
+    @staticmethod
     def exit(nom):
         mainstate.MainState.exit(nom)
         pass
+
+    @staticmethod
     def do(nom):
         # global frame
         # nom.frame = (frame//20) % 2
@@ -42,5 +46,6 @@ class HitState:
             nom.move(char_dir[nom.flip])
         # MainState.do(nom)
 
+    @staticmethod
     def draw(nom):
         mainstate.MainState.draw(nom)
