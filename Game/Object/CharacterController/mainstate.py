@@ -43,6 +43,6 @@ class MainState:
         nom.image.clip_composite_draw(nom.image_info[0], nom.image_info[1],
                                         nom.image_info[2], nom.image_info[3],
                                         nom.position.rotate, nom.flip,
-                                        x+ jumprange(nom.jumpradian, nom.jumppower, CC.x_tuple[f_index]),
-                                        y + jumprange(nom.jumpradian, nom.jumppower, CC.y_tuple[f_index]),
+                                        x,
+                                        y,
                                                       size_x, size_y)

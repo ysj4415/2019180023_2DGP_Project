@@ -14,15 +14,16 @@ class nom(character):
         self.anim_type = 5
         self.frame_number = 7
 
-        self.speed = 0
         self.rotation_radian = 0 / 360 * 2 * math.pi
 
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
-        self.frame_time = None
+
 
         self. life = 3
+
+
 
     def restart(self):
         self.position.translate.x, self.position.translate.y = window_size.width / 2, ground
@@ -65,18 +66,16 @@ class nom(character):
 
 
 
-    def empty_event_que(self):
-        while len(self.event_que) > 0:
-            event = self.event_que.pop()
+
+
+
 
     def update(self, frame_time):
-        self.frame_time = frame_time
-        self.speed = 300 * frame_time
-
+        super().update(frame_time)
         self.cur_state.do(self)
 
         damagebox = firering.damagebox + spike.damagebox
-        y = self.position.translate.y + jumprange(self.jumpradian, self.jumppower, 1)
+        y = self.position.translate.y
         for range in damagebox:
             if range[0][0] <= self.position.translate.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
                 if self.cur_state != HitState: self.add_event(DAMAGE)
@@ -88,8 +87,14 @@ class nom(character):
             if event in next_state_table[self.cur_state]:
                 self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
+
+
+
     def add_event(self, event):
         self.event_que.insert(0,event)
+    def empty_event_que(self):
+        while len(self.event_que) > 0:
+            event = self.event_que.pop()
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]

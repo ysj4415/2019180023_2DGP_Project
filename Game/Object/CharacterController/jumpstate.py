@@ -10,6 +10,7 @@ class JumpState:
         if(event == CC.SPACE_DOWN):
             nom.frame_count = 0
             nom.frame_speed = 30
+            nom.jumppower = 5
         nom.anim_type = 3
         nom.frame_number = 8
 
@@ -21,6 +22,12 @@ class JumpState:
 
     @staticmethod
     def do(nom):
+        mainstate.MainState.do(nom)
+        nom.jump()
+
+        if nom.position.translate.y == nom.image_info[3] / 2:
+            if nom.dir == 0: nom.add_event(CC.END_JUMP_STOP )
+            elif nom.dir != 0: nom.add_event(CC.END_JUMP_MOVE)
         # mainstate.MainState.do(nom)
         #
         # if nom.jump() == True: return 0
