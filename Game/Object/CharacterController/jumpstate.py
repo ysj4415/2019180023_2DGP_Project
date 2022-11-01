@@ -26,8 +26,8 @@ class JumpState:
         nom.jump()
 
         if nom.position.translate.y == nom.image_info[3] / 2:
-            if nom.dir == 0: nom.add_event(CC.END_JUMP_STOP )
-            elif nom.dir != 0: nom.add_event(CC.END_JUMP_MOVE)
+            if nom.dir == 0: nom.add_event(CC.GOTO_IDLE)
+            elif nom.dir != 0: nom.add_event(CC.GOTO_MOVE)
         # mainstate.MainState.do(nom)
         #
         # if nom.jump() == True: return 0

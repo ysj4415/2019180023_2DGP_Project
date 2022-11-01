@@ -40,8 +40,8 @@ class HitState:
         nom.image_info[1] = nom.anim_type * nom.image_info[3]
 
         if nom.frame_count // nom.frame_speed > 2 * 6:
-            if nom.dir == 0: nom.add_event(CC.END_JUMP_STOP)
-            elif nom.dir != 0: nom.add_event(CC.END_JUMP_MOVE)
+            if nom.dir == 0: nom.add_event(CC.GOTO_IDLE)
+            elif nom.dir != 0: nom.add_event(CC.GOTO_MOVE)
         elif nom.frame_count // nom.frame_speed < 3:
             nom.move(char_dir[nom.flip])
         # MainState.do(nom)

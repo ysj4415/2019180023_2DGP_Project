@@ -33,13 +33,11 @@ class character(pawn):
         high = self.image_info[3] / 2
         g_power = 2 * self.speed
         self.position.translate.y = self.position.translate.y - g_power
-        print(self.position.translate.y, high)
         if self.position.translate.y < high:
             self.position.translate.y = high
 
     def jump(self):
         self.position.translate.y += self.jumppower * self.speed
-        print(self.jumppower)
         if self.jumppower > 0: self.jumppower -= 0.02
         elif self.jumppower < 0 : self.jumppower = 0
     def update(self, frame_time):

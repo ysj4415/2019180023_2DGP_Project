@@ -2,7 +2,7 @@ from pico2d import *
 from Object.CharacterController import jumpstate, attackstate, runstate, idlestate, hitstate
 
 RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP,\
-SPACE_DOWN, SPACE_UP, END_JUMP_STOP, END_JUMP_MOVE,\
+SPACE_DOWN, SPACE_UP, GOTO_IDLE, GOTO_MOVE,\
 X_DOWN, X_UP, DAMAGE = range(11)
 
 
@@ -40,11 +40,11 @@ next_state_table = {
                 DAMAGE: HitState},
     JumpState: {  RIGHT_UP: JumpState, LEFT_UP: JumpState,
                 RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState,
-                 DAMAGE: HitState, END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState},
+                 DAMAGE: HitState, GOTO_IDLE: IdleState, GOTO_MOVE: RunState},
     AttackState: {RIGHT_UP: AttackState, LEFT_UP: AttackState,
                 RIGHT_DOWN: AttackState, LEFT_DOWN: AttackState,
-                  END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState},
+                  GOTO_IDLE: IdleState, GOTO_MOVE: RunState},
     HitState:   {RIGHT_UP: HitState, LEFT_UP: HitState,
                 RIGHT_DOWN: HitState, LEFT_DOWN: HitState,
-                 END_JUMP_STOP: IdleState, END_JUMP_MOVE: RunState,}
+                 GOTO_IDLE: IdleState, GOTO_MOVE: RunState,}
 }

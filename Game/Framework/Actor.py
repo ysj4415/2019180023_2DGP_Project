@@ -16,7 +16,7 @@ class actor:
     def __del__(self):
         pass
     def loadimage(self, image):
-        if self.image == None: self.image = load_image(image)
+        if actor.image == None: self.image = load_image(image)
 
     def update(self):
         pass
