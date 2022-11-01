@@ -1,16 +1,20 @@
 from Object.CharacterController import mainstate
 from Object.CharacterController import CharacterController as CC
 import window_size
-
+max_jumppower = 3
 
 class JumpState:
+    jumprange = 0
     @staticmethod
     def enter(nom, event):
         mainstate.MainState.enter(nom, event)
         if(event == CC.SPACE_DOWN):
             nom.frame_count = 0
             nom.frame_speed = 30
-            nom.jumppower = 5
+            JumpState.jumprange = 10
+            nom.jumppower = max_jumppower
+        elif(event == CC.SPACE_UP):
+            JumpState.jumprange -= 4
         nom.anim_type = 3
         nom.frame_number = 8
 
@@ -23,6 +27,9 @@ class JumpState:
     @staticmethod
     def do(nom):
         mainstate.MainState.do(nom)
+
+        JumpState.jumprange -= 0.1
+        if JumpState.jumprange > 0: nom.jumppower = max_jumppower
         nom.jump()
 
         if nom.position.translate.y == nom.image_info[3] / 2:

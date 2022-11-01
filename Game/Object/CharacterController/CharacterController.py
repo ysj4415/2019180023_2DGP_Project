@@ -39,7 +39,7 @@ next_state_table = {
                SPACE_DOWN: JumpState, X_DOWN: AttackState,
                 DAMAGE: HitState},
     JumpState: {  RIGHT_UP: JumpState, LEFT_UP: JumpState,
-                RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState,
+                RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, SPACE_UP: JumpState,
                  DAMAGE: HitState, GOTO_IDLE: IdleState, GOTO_MOVE: RunState},
     AttackState: {RIGHT_UP: AttackState, LEFT_UP: AttackState,
                 RIGHT_DOWN: AttackState, LEFT_DOWN: AttackState,

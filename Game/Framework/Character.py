@@ -15,7 +15,7 @@ class character(pawn):
         self.frame_time = None
 
         self.dir = 0
-        self.jumppower = 5
+        self.jumppower = 0
         # self.jumpradian = 0
         # self.jumppower = 65
     # def jump(self):
@@ -31,15 +31,16 @@ class character(pawn):
     #     else: return False
     def grabity(self):
         high = self.image_info[3] / 2
-        g_power = 2 * self.speed
+        g_power = 1.5 * self.speed
         self.position.translate.y = self.position.translate.y - g_power
         if self.position.translate.y < high:
             self.position.translate.y = high
 
     def jump(self):
         self.position.translate.y += self.jumppower * self.speed
-        if self.jumppower > 0: self.jumppower -= 0.02
+        if self.jumppower > 0: self.jumppower -= 0.05
         elif self.jumppower < 0 : self.jumppower = 0
+
     def update(self, frame_time):
         super().update()
         self.frame_time = frame_time
