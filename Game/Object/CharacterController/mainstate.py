@@ -36,13 +36,4 @@ class MainState:
     @staticmethod
     def draw(nom):
         f_index = (nom.floor_index + 1) % 4
-        x = nom.position.translate.x
-        y = nom.position.translate.y
-        size_x = nom.image_info[2] * nom.position.scale.x
-        size_y = nom.image_info[3] * nom.position.scale.y
-        nom.image.clip_composite_draw(nom.image_info[0], nom.image_info[1],
-                                        nom.image_info[2], nom.image_info[3],
-                                        nom.position.rotate, nom.flip,
-                                        x,
-                                        y,
-                                                      size_x, size_y)
+        nom.draw()

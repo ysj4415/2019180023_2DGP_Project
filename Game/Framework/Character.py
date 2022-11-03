@@ -24,21 +24,6 @@ class character(pawn):
         self.key_event_table = {}
         self.next_state_table = {}
 
-
-
-        # self.jumpradian = 0
-        # self.jumppower = 65
-    # def jump(self):
-    #
-    #     self.jumpradian = (self.jumpradian + 500 * self.frame_time//1) % 180
-    #     f_index = (self.floor_index + 1) % 4
-    #     jump_range = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index] + y_tuple[f_index])
-    #
-    #     if jump_range == 0 :
-    #         if self.dir == 0: self.add_event(END_JUMP_STOP )
-    #         elif self.dir != 0: self.add_event(END_JUMP_MOVE)
-    #         return True
-    #     else: return False
     def grabity(self):
         high = self.image_info[3] / 2
         g_power = 1.5 * self.speed
@@ -57,6 +42,15 @@ class character(pawn):
         self.speed = 300 * frame_time
 
         self.grabity()
+
+        self.cur_state.do(self)
+        if len(self.event_que) > 0:
+            event = self.event_que.pop()
+            self.cur_state.exit(self)
+            if event in self.next_state_table[self.cur_state]:
+                self.cur_state = self.next_state_table[self.cur_state][event]
+            self.cur_state.enter(self, event)
+
     def move(self, dir):
         self.position.translate.x += self.speed * self.x_tuple[self.floor_index] * dir
         self.position.translate.y += self.speed * self.y_tuple[self.floor_index] * dir
@@ -64,11 +58,12 @@ class character(pawn):
         self.position.translate.y = clamp(self.speed, self.position.translate.y, window_size.height - self.speed)
 
 
+
     def SetKET(self, key_event_table):
         self.key_event_table = key_event_table
-
     def SetNST(self, next_state_table):
         self.next_state_table = next_state_table
+
 
     def add_event(self, event):
         self.event_que.insert(0,event)
