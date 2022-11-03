@@ -4,8 +4,7 @@ import window_size
 import firering
 import spike
 
-# def jumprange(jumpradian, jumppower, index):
-#     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
+
 class nom(character):
     def __init__(self):
         super().__init__(window_size.width / 2, ground, IdleState)
@@ -16,11 +15,12 @@ class nom(character):
 
         self.rotation_radian = 0 / 360 * 2 * math.pi
 
-        self.event_que = []
-        self.cur_state = IdleState
-        self.cur_state.enter(self, None)
+        # self.event_que = []
+        # self.cur_state = IdleState
+        # self.cur_state.enter(self, None)
 
-
+        self.SetKET(key_event_table)
+        self.SetNST(next_state_table)
         self. life = 3
 
 
@@ -36,37 +36,35 @@ class nom(character):
         self.flip = ''
         self.anim = [5, 7]
 
-
-        self.event_que = []
-        self.cur_state = RunState
-        self.cur_state.enter(self, None)
-
-
-
-
-    def wall_move(self, direction):
-        f_index = (self.floor_index + 1) % 4
-
-
-        if(direction == 'left'):
-            self.position.rotate -= 90 / 360 * 2 * math.pi
-            self.floor_index = (self.floor_index - 1) % 4
-
-        if(direction == 'right'):
-            self.position.rotate += 90 / 360 * 2 * math.pi
-            self.floor_index = (self.floor_index + 1) % 4
-
-        jump = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index])
-        self.position.translate.x = (self.position.translate.x + jump) * x_tuple[(self.floor_index) % 2]
-        jump = jumprange(self.jumpradian, self.jumppower, y_tuple[f_index])
-        self.position.translate.y = (self.position.translate.y + jump) * y_tuple[(self.floor_index) % 2]
-
-        self.position.translate.x = (self.position.translate.x + (ground * x_tuple[(self.floor_index + 1) % 4])) % window_size.width
-        self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % window_size.height
+        #
+        # self.event_que = []
+        # self.cur_state = RunState
+        # self.cur_state.enter(self, None)
 
 
 
 
+    # def wall_move(self, direction):
+    #     f_index = (self.floor_index + 1) % 4
+    #
+    #
+    #     if(direction == 'left'):
+    #         self.position.rotate -= 90 / 360 * 2 * math.pi
+    #         self.floor_index = (self.floor_index - 1) % 4
+    #
+    #     if(direction == 'right'):
+    #         self.position.rotate += 90 / 360 * 2 * math.pi
+    #         self.floor_index = (self.floor_index + 1) % 4
+    #
+    #     jump = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index])
+    #     self.position.translate.x = (self.position.translate.x + jump) * x_tuple[(self.floor_index) % 2]
+    #     jump = jumprange(self.jumpradian, self.jumppower, y_tuple[f_index])
+    #     self.position.translate.y = (self.position.translate.y + jump) * y_tuple[(self.floor_index) % 2]
+    #
+    #     self.position.translate.x = (self.position.translate.x + (ground * x_tuple[(self.floor_index + 1) % 4])) % window_size.width
+    #     self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % window_size.height
+    #
+    #
 
 
 
@@ -90,16 +88,16 @@ class nom(character):
 
 
 
-    def add_event(self, event):
-        self.event_que.insert(0,event)
-    def empty_event_que(self):
-        while len(self.event_que) > 0:
-            event = self.event_que.pop()
-    def handle_event(self, event):
-        if (event.type, event.key) in key_event_table:
-            key_event = key_event_table[(event.type, event.key)]
-            if key_event in next_state_table[self.cur_state]:
-                self.add_event(key_event)
+    # def add_event(self, event):
+    #     self.event_que.insert(0,event)
+    # def empty_event_que(self):
+    #     while len(self.event_que) > 0:
+    #         event = self.event_que.pop()
+    # def handle_event(self, event):
+    #     if (event.type, event.key) in key_event_table:
+    #         key_event = key_event_table[(event.type, event.key)]
+    #         if key_event in next_state_table[self.cur_state]:
+    #             self.add_event(key_event)
     def draw(self):
         self.cur_state.draw(self)
 
