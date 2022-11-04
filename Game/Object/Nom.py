@@ -35,25 +35,23 @@ class nom(character):
         self.cur_state.enter(self, None)
 
 
-    # def wall_move(self, direction):
-    #     f_index = (self.floor_index + 1) % 4
-    #
-    #
-    #     if(direction == 'left'):
-    #         self.position.rotate -= 90 / 360 * 2 * math.pi
-    #         self.floor_index = (self.floor_index - 1) % 4
-    #
-    #     if(direction == 'right'):
-    #         self.position.rotate += 90 / 360 * 2 * math.pi
-    #         self.floor_index = (self.floor_index + 1) % 4
-    #
-    #     jump = jumprange(self.jumpradian, self.jumppower, x_tuple[f_index])
-    #     self.position.translate.x = (self.position.translate.x + jump) * x_tuple[(self.floor_index) % 2]
-    #     jump = jumprange(self.jumpradian, self.jumppower, y_tuple[f_index])
-    #     self.position.translate.y = (self.position.translate.y + jump) * y_tuple[(self.floor_index) % 2]
-    #
-    #     self.position.translate.x = (self.position.translate.x + (ground * x_tuple[(self.floor_index + 1) % 4])) % window_size.width
-    #     self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % window_size.height
+    def wall_move(self, direction):
+        f_index = (self.floor_index + 1) % 4
+
+
+        if(direction == 'left'):
+            self.position.rotate -= 90 / 360 * 2 * math.pi
+            self.floor_index = (self.floor_index - 1) % 4
+
+        if(direction == 'right'):
+            self.position.rotate += 90 / 360 * 2 * math.pi
+            self.floor_index = (self.floor_index + 1) % 4
+
+        self.position.translate.x = self.position.translate.x * x_tuple[(self.floor_index) % 2]
+        self.position.translate.y = self.position.translate.y * y_tuple[(self.floor_index) % 2]
+
+        self.position.translate.x = (self.position.translate.x + (ground * x_tuple[(self.floor_index + 1) % 4])) % window_size.width
+        self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % window_size.height
 
 
     def update(self, frame_time):
