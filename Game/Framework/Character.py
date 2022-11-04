@@ -27,12 +27,43 @@ class character(pawn):
     def grabity(self):
         high = self.image_info[3] / 2
         g_power = 1.5 * self.speed
-        self.position.translate.y = self.position.translate.y - g_power
-        if self.position.translate.y < high:
-            self.position.translate.y = high
+
+        if self.floor_index == 0:
+            self.position.translate.y = self.position.translate.y - g_power
+            if self.position.translate.y < high:
+                self.position.translate.y = high
+            pass
+        elif self.floor_index == 1:
+            self.position.translate.x = self.position.translate.x + g_power
+            if self.position.translate.x > window_size. width - high:
+                self.position.translate.x = window_size. width - high
+            pass
+        elif self.floor_index == 2:
+            self.position.translate.y = self.position.translate.y + g_power
+            if self.position.translate.y > window_size. height - high:
+                self.position.translate.y = window_size. height - high
+            pass
+        elif self.floor_index == 3:
+            self.position.translate.x = self.position.translate.x - g_power
+            if self.position.translate.x < high:
+                self.position.translate.x = high
+            pass
+
+
 
     def jump(self):
-        self.position.translate.y += self.jumppower * self.speed
+        if self.floor_index == 0:
+            self.position.translate.y += self.jumppower * self.speed
+            pass
+        elif self.floor_index == 1:
+            self.position.translate.x -= self.jumppower * self.speed
+            pass
+        elif self.floor_index == 2:
+            self.position.translate.y -= self.jumppower * self.speed
+            pass
+        elif self.floor_index == 3:
+            self.position.translate.x += self.jumppower * self.speed
+            pass
         if self.jumppower > 0: self.jumppower -= 0.05
         elif self.jumppower < 0 : self.jumppower = 0
 

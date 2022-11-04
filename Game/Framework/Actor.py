@@ -15,6 +15,9 @@ class actor:
 
     def __del__(self):
         pass
+    def setfloorindex(self, floor_index):
+        self.floor_index = floor_index
+        self.position.rotate = floor_index * 90 / 360 * 2 * math.pi
     def loadimage(self, image):
         if actor.image == None: self.image = load_image(image)
 

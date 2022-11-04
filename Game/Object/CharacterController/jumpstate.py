@@ -33,9 +33,37 @@ class JumpState:
         if JumpState.jumprange > 0: nom.jumppower = max_jumppower
         nom.jump()
 
-        if nom.position.translate.y == nom.image_info[3] / 2:
-            if nom.dir == 0: nom.add_event(CC.GOTO_IDLE)
-            elif nom.dir != 0: nom.add_event(CC.GOTO_MOVE)
+        if nom.floor_index == 0:
+            if nom.position.translate.y == nom.image_info[3] / 2:
+                if nom.dir == 0:
+                    nom.add_event(CC.GOTO_IDLE)
+                elif nom.dir != 0:
+                    nom.add_event(CC.GOTO_MOVE)
+
+        elif nom.floor_index == 1:
+            if nom.position.translate.x == window_size.width - nom.image_info[3] / 2:
+                if nom.dir == 0:
+                    nom.add_event(CC.GOTO_IDLE)
+                elif nom.dir != 0:
+                    nom.add_event(CC.GOTO_MOVE)
+
+        elif nom.floor_index == 2:
+            if nom.position.translate.y == window_size.height - nom.image_info[3] / 2:
+                if nom.dir == 0:
+                    nom.add_event(CC.GOTO_IDLE)
+                elif nom.dir != 0:
+                    nom.add_event(CC.GOTO_MOVE)
+
+        elif nom.floor_index == 3:
+            if nom.position.translate.x == nom.image_info[3] / 2:
+                if nom.dir == 0:
+                    nom.add_event(CC.GOTO_IDLE)
+                elif nom.dir != 0:
+                    nom.add_event(CC.GOTO_MOVE)
+
+        # 벽에 부딪혔는지 체크
+        
+
         # mainstate.MainState.do(nom)
         #
         # if nom.jump() == True: return 0
