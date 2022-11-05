@@ -1,7 +1,7 @@
 from Object.CharacterController import mainstate
 from Object.CharacterController import CharacterController as CC
 import window_size
-max_jumppower = 3
+max_jumppower = 3.8
 
 class JumpState:
     jumprange = 0
@@ -14,7 +14,7 @@ class JumpState:
             JumpState.jumprange = 10
             nom.jumppower = max_jumppower
         elif(event == CC.SPACE_UP):
-            JumpState.jumprange -= 4
+            JumpState.jumprange -= 6
         nom.anim_type = 3
         nom.frame_number = 8
 

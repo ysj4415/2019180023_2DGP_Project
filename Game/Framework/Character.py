@@ -26,7 +26,7 @@ class character(pawn):
 
     def grabity(self):
         high = self.image_info[3] / 2
-        g_power = 1.5 * self.speed
+        g_power = 1.7 * self.speed
 
         if self.floor_index == 0:
             self.position.translate.y = self.position.translate.y - g_power
