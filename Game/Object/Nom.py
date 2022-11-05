@@ -21,6 +21,7 @@ class nom(character):
 
     def restart(self):
         self.position.translate.x, self.position.translate.y = window_size.width / 2, ground
+        self.position.rotate = 0
         self.jumpradian = 0
         self.rotation_radian = 0 / 360 * 2 * math.pi
         self.floor_index = 0
@@ -31,7 +32,8 @@ class nom(character):
         self.anim = [5, 7]
 
         self.event_que = []
-        self.cur_state = RunState
+        if self.dir != 0: self.cur_state = RunState
+        else: self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
 
