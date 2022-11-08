@@ -28,7 +28,6 @@ class JumpState:
     def do(nom):
         mainstate.MainState.do(nom)
 
-
         JumpState.jumprange -= 0.1
         if JumpState.jumprange > 0: nom.jumppower = max_jumppower
         nom.jump()
