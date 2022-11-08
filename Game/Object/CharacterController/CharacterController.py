@@ -3,7 +3,7 @@ from Object.CharacterController import jumpstate, attackstate, runstate, idlesta
 
 RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP,\
 SPACE_DOWN, SPACE_UP, GOTO_IDLE, GOTO_MOVE,\
-X_DOWN, X_UP, DAMAGE = range(11)
+X_DOWN, DAMAGE = range(10)
 
 
 key_event_table = {

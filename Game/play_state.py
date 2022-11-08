@@ -3,12 +3,9 @@ from Object import Nom
 import firering
 import spike
 import game_framework
-
+import game_world
 
 nom = None
-ring = None
-ring2 = None
-traps = None
 running = None
 image = None
 
@@ -16,40 +13,33 @@ image = None
 # 초기화
 def enter():
     global nom
-    global ring
-    global ring2
-    global traps
     global running
     global image
 
     nom = Nom.nom()
-    ring = firering.FireRing(600,50, 2)
-    ring2 = firering.FireRing(450,50, 1)
-    traps = [spike.Spike(200, 15, 0), spike.Spike(785, 200, 1)]
+    monster = (firering.FireRing(600,50, 2),
+               firering.FireRing(450,50, 1),
+               spike.Spike(200, 15, 0),
+               spike.Spike(785, 200, 1))
+    game_world.add_object(nom, 0)
+    game_world.add_objects(monster, 0)
+
     running = True
     image = pico2d.load_image('res/map/map1.png')
 # 종료
 def exit_state():
-    global nom
-    global ring
-    global ring2
-    global traps
-    del nom
-    del ring
-    del ring2
-    del traps
+    game_world.clear()
 def update(frame_time):
-    nom.update(frame_time)
-    ring.update()
-    ring2.update()
-    for trap in traps : trap.update()
+    for game_object in game_world.all_objects():
+        game_object.update(frame_time)
+def draw_world():
+    image.draw(400,300)
+    for game_object in game_world.all_objects():
+        game_object.draw()
+
 def draw():
     pico2d.clear_canvas()
-    image.draw(400,300)
-    nom.draw()
-    ring.draw()
-    ring2.draw()
-    for trap in traps : trap.draw()
+    draw_world()
     pico2d.update_canvas()
 
 
