@@ -1,18 +1,20 @@
 from Framework.Pawn import *
 # from Object.CharacterController.CharacterController import *
 import window_size
+import game_framework
 
 # def jumprange(jumpradian, jumppower, index):
 #     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
 #
 #
-
+PIXEL_PER_METER = (10.0/ 0.3)
+RUN_SPEED_KMPH = 20.0
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 class character(pawn):
     def __init__(self, x = 0, y = 0, state = None):
         super().__init__(x, y)
-
-        self.speed = 0
-        self.frame_time = None
 
         self.dir = 0
         self.jumppower = 0
@@ -26,7 +28,7 @@ class character(pawn):
 
     def grabity(self):
         high = self.image_info[3] / 2
-        g_power = 1.7 * self.speed
+        g_power = 1.7 * RUN_SPEED_PPS * game_framework.frame_time
 
         if self.floor_index == 0:
             self.position.translate.y = self.position.translate.y - g_power
@@ -52,26 +54,24 @@ class character(pawn):
 
 
     def jump(self):
+        speed = RUN_SPEED_PPS * game_framework.frame_time
         if self.floor_index == 0:
-            self.position.translate.y += self.jumppower * self.speed
+            self.position.translate.y += self.jumppower * speed
             pass
         elif self.floor_index == 1:
-            self.position.translate.x -= self.jumppower * self.speed
+            self.position.translate.x -= self.jumppower * speed
             pass
         elif self.floor_index == 2:
-            self.position.translate.y -= self.jumppower * self.speed
+            self.position.translate.y -= self.jumppower * speed
             pass
         elif self.floor_index == 3:
-            self.position.translate.x += self.jumppower * self.speed
+            self.position.translate.x += self.jumppower * speed
             pass
         if self.jumppower > 0: self.jumppower -= 0.05
         elif self.jumppower < 0 : self.jumppower = 0
 
-    def update(self, frame_time):
+    def update(self):
         super().update()
-        self.frame_time = frame_time
-        self.speed = 300 * frame_time
-
         self.grabity()
 
         self.cur_state.do(self)
@@ -83,10 +83,10 @@ class character(pawn):
             self.cur_state.enter(self, event)
 
     def move(self, dir):
-        self.position.translate.x += self.speed * self.x_tuple[self.floor_index] * dir
-        self.position.translate.y += self.speed * self.y_tuple[self.floor_index] * dir
-        self.position.translate.x = clamp(self.speed, self.position.translate.x, window_size.width - self.speed)
-        self.position.translate.y = clamp(self.speed, self.position.translate.y, window_size.height - self.speed)
+        self.position.translate.x +=  RUN_SPEED_PPS * game_framework.frame_time * self.x_tuple[self.floor_index] * dir
+        self.position.translate.y += RUN_SPEED_PPS * game_framework.frame_time * self.y_tuple[self.floor_index] * dir
+        self.position.translate.x = clamp(0, self.position.translate.x, window_size.width)
+        self.position.translate.y = clamp(0, self.position.translate.y, window_size.height)
 
 
 

@@ -24,7 +24,7 @@ class FireRing(pawn):
         x = self.position.translate.x
         y = self.position.translate.y
         damagebox.append(((x - 10, 0), (x + 10, y - 30)))
-    def update(self,frame_time):
+    def update(self):
         super().update()
     def draw(self):
         for i in range(self.step):

@@ -39,10 +39,10 @@ class JumpState:
                 elif nom.dir != 0:
                     nom.add_event(CC.GOTO_MOVE)
             # 벽에 부딪혔는지 체크
-            if nom.position.translate.x >= window_size.width - nom.speed:
+            if nom.position.translate.x >= window_size.width:
                 nom.wall_move('right')
                 pass
-            elif nom.position.translate.x <= nom.speed:
+            elif nom.position.translate.x <= 0:
                 nom.wall_move('left')
                 pass
 
@@ -54,10 +54,10 @@ class JumpState:
                     nom.add_event(CC.GOTO_MOVE)
 
             # 벽에 부딪혔는지 체크
-            if nom.position.translate.y >= window_size.height - nom.speed:
+            if nom.position.translate.y >= window_size.height:
                 nom.wall_move('right')
                 pass
-            elif nom.position.translate.y <= nom.speed:
+            elif nom.position.translate.y <= 0:
                 nom.wall_move('left')
                 pass
         elif nom.floor_index == 2:
@@ -67,10 +67,10 @@ class JumpState:
                 elif nom.dir != 0:
                     nom.add_event(CC.GOTO_MOVE)
             # 벽에 부딪혔는지 체크
-            if nom.position.translate.x >= window_size.width - nom.speed:
+            if nom.position.translate.x >= window_size.width:
                 nom.wall_move('left')
                 pass
-            elif nom.position.translate.x <= nom.speed:
+            elif nom.position.translate.x <= 0:
                 nom.wall_move('right')
                 pass
         elif nom.floor_index == 3:
@@ -81,10 +81,10 @@ class JumpState:
                     nom.add_event(CC.GOTO_MOVE)
 
             # 벽에 부딪혔는지 체크
-            if nom.position.translate.y >= window_size.height - nom.speed:
+            if nom.position.translate.y >= window_size.height:
                 nom.wall_move('left')
                 pass
-            elif nom.position.translate.y <= nom.speed:
+            elif nom.position.translate.y <= 0:
                 nom.wall_move('right')
                 pass
 

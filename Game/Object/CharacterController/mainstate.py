@@ -6,6 +6,8 @@ def jumprange(jumpradian, jumppower, index):
 
 frame = None
 
+
+
 class MainState:
     @staticmethod
     def enter(nom, event):

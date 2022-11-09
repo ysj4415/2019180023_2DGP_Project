@@ -56,8 +56,8 @@ class nom(character):
         self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % window_size.height
 
 
-    def update(self, frame_time):
-        super().update(frame_time)
+    def update(self):
+        super().update()
         # self.cur_state.do(self)
 
         damagebox = firering.damagebox + spike.damagebox

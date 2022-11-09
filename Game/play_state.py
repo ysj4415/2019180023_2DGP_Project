@@ -29,9 +29,9 @@ def enter():
 # 종료
 def exit_state():
     game_world.clear()
-def update(frame_time):
+def update():
     for game_object in game_world.all_objects():
-        game_object.update(frame_time)
+        game_object.update()
 def draw_world():
     image.draw(400,300)
     for game_object in game_world.all_objects():
