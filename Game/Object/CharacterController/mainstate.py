@@ -1,12 +1,4 @@
 from Object.CharacterController import CharacterController as CC
-import math
-
-def jumprange(jumpradian, jumppower, index):
-    return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
-
-frame = None
-
-
 
 class MainState:
     @staticmethod

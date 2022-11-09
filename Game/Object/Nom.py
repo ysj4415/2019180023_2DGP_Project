@@ -4,6 +4,11 @@ import window_size
 import firering
 import spike
 
+RUN_SPEED_KMPH = 20.0
+
+
+JUMP_SPEED_KMPH = 0.0
+
 
 class nom(character):
     def __init__(self):
@@ -18,6 +23,9 @@ class nom(character):
         self.SetKET(key_event_table)
         self.SetNST(next_state_table)
         self. life = 3
+
+        self.RUN_SPEED_KMPH = RUN_SPEED_KMPH
+        self.JUMP_SPEED_KMPH = JUMP_SPEED_KMPH
 
     def restart(self):
         self.position.translate.x, self.position.translate.y = window_size.width / 2, ground

@@ -8,10 +8,8 @@ import game_framework
 #
 #
 PIXEL_PER_METER = (10.0/ 0.3)
-RUN_SPEED_KMPH = 20.0
-RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+
 class character(pawn):
     def __init__(self, x = 0, y = 0, state = None):
         super().__init__(x, y)
@@ -26,52 +24,82 @@ class character(pawn):
         self.key_event_table = {}
         self.next_state_table = {}
 
-    def grabity(self):
-        high = self.image_info[3] / 2
-        g_power = 1.7 * RUN_SPEED_PPS * game_framework.frame_time
+        self.RUN_SPEED_KMPH = None
+        self.JUMP_SPEED_KMPH = None
 
+    def grabity(self):
+        # RUN_SPEED_MPM = (self.RUN_SPEED_KMPH * 1000.0 / 60.0)
+        # RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+        # RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+        #
+        # high = self.image_info[3] / 2
+        # g_power = 1.7 * RUN_SPEED_PPS * game_framework.frame_time
+        #
+        # if self.floor_index == 0:
+        #     self.position.translate.y = self.position.translate.y - g_power
+        #     if self.position.translate.y < high:
+        #         self.position.translate.y = high
+        #     pass
+        # elif self.floor_index == 1:
+        #     self.position.translate.x = self.position.translate.x + g_power
+        #     if self.position.translate.x > window_size. width - high:
+        #         self.position.translate.x = window_size. width - high
+        #     pass
+        # elif self.floor_index == 2:
+        #     self.position.translate.y = self.position.translate.y + g_power
+        #     if self.position.translate.y > window_size. height - high:
+        #         self.position.translate.y = window_size. height - high
+        #     pass
+        # elif self.floor_index == 3:
+        #     self.position.translate.x = self.position.translate.x - g_power
+        #     if self.position.translate.x < high:
+        #         self.position.translate.x = high
+        #     pass
+        high = self.image_info[3] / 2
+
+        if self.position.translate.y > high:
+            self.JUMP_SPEED_KMPH -= 1.0
+        else:
+            self.JUMP_SPEED_KMPH = 0.0
+
+
+    def jump(self):
+        high = self.image_info[3] / 2
+
+        JUMP_SPEED_MPM = (self.JUMP_SPEED_KMPH * 1000.0 / 60.0)
+        JUMP_SPEED_MPS = (JUMP_SPEED_MPM / 60.0)
+        JUMP_SPEED_PPS = (JUMP_SPEED_MPS * PIXEL_PER_METER)
+
+        speed = JUMP_SPEED_PPS * game_framework.frame_time
         if self.floor_index == 0:
-            self.position.translate.y = self.position.translate.y - g_power
-            if self.position.translate.y < high:
+            if self.position.translate.y >= high:
+                self.position.translate.y += speed
+            else:
                 self.position.translate.y = high
             pass
         elif self.floor_index == 1:
-            self.position.translate.x = self.position.translate.x + g_power
-            if self.position.translate.x > window_size. width - high:
+            if self.position.translate.x <= window_size. width - high:
+                self.position.translate.x -= speed
+            else:
                 self.position.translate.x = window_size. width - high
             pass
         elif self.floor_index == 2:
-            self.position.translate.y = self.position.translate.y + g_power
-            if self.position.translate.y > window_size. height - high:
+            if self.position.translate.y <= window_size. height - high:
+                self.position.translate.y -= speed
+            else:
                 self.position.translate.y = window_size. height - high
             pass
         elif self.floor_index == 3:
-            self.position.translate.x = self.position.translate.x - g_power
-            if self.position.translate.x < high:
+            if self.position.translate.x >= high:
+                self.position.translate.x += speed
+            else:
                 self.position.translate.x = high
             pass
 
 
-
-    def jump(self):
-        speed = RUN_SPEED_PPS * game_framework.frame_time
-        if self.floor_index == 0:
-            self.position.translate.y += self.jumppower * speed
-            pass
-        elif self.floor_index == 1:
-            self.position.translate.x -= self.jumppower * speed
-            pass
-        elif self.floor_index == 2:
-            self.position.translate.y -= self.jumppower * speed
-            pass
-        elif self.floor_index == 3:
-            self.position.translate.x += self.jumppower * speed
-            pass
-        if self.jumppower > 0: self.jumppower -= 0.05
-        elif self.jumppower < 0 : self.jumppower = 0
-
     def update(self):
         super().update()
+        self.jump()
         self.grabity()
 
         self.cur_state.do(self)
@@ -83,6 +111,10 @@ class character(pawn):
             self.cur_state.enter(self, event)
 
     def move(self, dir):
+        RUN_SPEED_MPM = (self.RUN_SPEED_KMPH * 1000.0 / 60.0)
+        RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+        RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
         self.position.translate.x +=  RUN_SPEED_PPS * game_framework.frame_time * self.x_tuple[self.floor_index] * dir
         self.position.translate.y += RUN_SPEED_PPS * game_framework.frame_time * self.y_tuple[self.floor_index] * dir
         self.position.translate.x = clamp(0, self.position.translate.x, window_size.width)
