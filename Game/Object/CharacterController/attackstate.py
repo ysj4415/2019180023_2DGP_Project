@@ -1,5 +1,7 @@
 from Object.CharacterController import mainstate
 from Object.CharacterController import CharacterController as CC
+import game_framework
+from Object import Nom
 
 class AttackState:
     @staticmethod
@@ -18,9 +20,7 @@ class AttackState:
         pass
     @staticmethod
     def do(nom):
-        frame = (nom.frame_count // nom.frame_speed) % nom.frame_number
-        nom.frame_count += 1
-        nom.image_info[0] = frame * nom.image_info[2]
+        nom.frame = (nom.frame + nom.frame_number * Nom.ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
         nom.image_info[1] = nom.anim_type * nom.image_info[3]
 
         if nom.frame_count // nom.frame_speed > 2:

@@ -5,10 +5,10 @@ import firering
 import spike
 
 RUN_SPEED_KMPH = 20.0
-
-
 JUMP_SPEED_KMPH = 0.0
 
+TIMER_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIMER_PER_ACTION
 
 class nom(character):
     def __init__(self):

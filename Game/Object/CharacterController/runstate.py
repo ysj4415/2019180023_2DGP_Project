@@ -6,8 +6,6 @@ class RunState:
     def enter(nom, event):
 
         mainstate.MainState.enter(nom, event)
-        nom.frame_count = 0
-        nom.frame_speed = 40
 
         if nom.dir < 0:
             nom.flip = 'h'

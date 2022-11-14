@@ -10,6 +10,8 @@ class actor:
         self.image_info = None
         self.floor_index = floor_index
         self.flip = ''
+        self.frame = 0
+
 
         self.position.rotate = floor_index * 90 / 360 * 2 * math.pi
 
@@ -29,7 +31,7 @@ class actor:
         y = self.position.translate.y
         size_x = self.image_info[2] * self.position.scale.x
         size_y = self.image_info[3] * self.position.scale.y
-        self.image.clip_composite_draw(self.image_info[0], self.image_info[1],
+        self.image.clip_composite_draw(int(self.frame) * self.image_info[2], self.image_info[1],
                                         self.image_info[2], self.image_info[3],
                                         self.position.rotate, self.flip,
                                         x, y, size_x, size_y)
