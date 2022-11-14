@@ -28,39 +28,28 @@ class character(pawn):
         self.JUMP_SPEED_KMPH = None
 
     def grabity(self):
-        # RUN_SPEED_MPM = (self.RUN_SPEED_KMPH * 1000.0 / 60.0)
-        # RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-        # RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-        #
-        # high = self.image_info[3] / 2
-        # g_power = 1.7 * RUN_SPEED_PPS * game_framework.frame_time
-        #
-        # if self.floor_index == 0:
-        #     self.position.translate.y = self.position.translate.y - g_power
-        #     if self.position.translate.y < high:
-        #         self.position.translate.y = high
-        #     pass
-        # elif self.floor_index == 1:
-        #     self.position.translate.x = self.position.translate.x + g_power
-        #     if self.position.translate.x > window_size. width - high:
-        #         self.position.translate.x = window_size. width - high
-        #     pass
-        # elif self.floor_index == 2:
-        #     self.position.translate.y = self.position.translate.y + g_power
-        #     if self.position.translate.y > window_size. height - high:
-        #         self.position.translate.y = window_size. height - high
-        #     pass
-        # elif self.floor_index == 3:
-        #     self.position.translate.x = self.position.translate.x - g_power
-        #     if self.position.translate.x < high:
-        #         self.position.translate.x = high
-        #     pass
         high = self.image_info[3] / 2
 
-        if self.position.translate.y > high:
-            self.JUMP_SPEED_KMPH -= 1.0
-        else:
-            self.JUMP_SPEED_KMPH = 0.0
+        if self.floor_index == 0:
+            if self.position.translate.y > high:
+                self.JUMP_SPEED_KMPH -= 1.0
+            else:
+                self.JUMP_SPEED_KMPH = 0.0
+        elif self.floor_index == 1:
+            if self.position.translate.x < window_size. width - high:
+                self.JUMP_SPEED_KMPH -= 1.0
+            else:
+                self.JUMP_SPEED_KMPH = 0.0
+        elif self.floor_index == 2:
+            if self.position.translate.y < window_size. height - high:
+                self.JUMP_SPEED_KMPH -= 1.0
+            else:
+                self.JUMP_SPEED_KMPH = 0.0
+        elif self.floor_index == 3:
+            if self.position.translate.x > high:
+                self.JUMP_SPEED_KMPH -= 1.0
+            else:
+                self.JUMP_SPEED_KMPH = 0.0
 
 
     def jump(self):
