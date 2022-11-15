@@ -23,8 +23,8 @@ class MainState:
 
     @staticmethod
     def do(nom):
-        nom.frame = (nom.frame + nom.frame_number * Nom.ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
-        nom.image_info[1] = nom.anim_type * nom.image_info[3]
+        # nom.frame = (nom.frame + nom.frame_number * Nom.ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
+        # nom.image_info[1] = nom.anim_type * nom.image_info[3]
 
         nom.move(nom.dir)
 

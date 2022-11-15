@@ -20,8 +20,8 @@ class AttackState:
         pass
     @staticmethod
     def do(nom):
-        nom.frame = (nom.frame + nom.frame_number * Nom.ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
-        nom.image_info[1] = nom.anim_type * nom.image_info[3]
+        # nom.frame = (nom.frame + nom.frame_number * Nom.ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
+        # nom.image_info[1] = nom.anim_type * nom.image_info[3]
 
         if nom.frame_count // nom.frame_speed > 2:
             if nom.dir == 0: nom.add_event(CC.GOTO_IDLE)

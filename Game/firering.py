@@ -13,7 +13,7 @@ class FireRing(pawn):
 
         self.frame_number = 2
         self.frame_speed = 50
-
+        self.TIMER_PER_ACTION = 0.5
         if step >= 3 or step < 0:
             print("error: step over 3")
         else: self.step = step

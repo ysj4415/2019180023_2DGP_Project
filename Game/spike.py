@@ -11,6 +11,7 @@ class Spike(actor):
         self.image_info = [0, 0, 35, 30]
         self.loadimage('res/character/trap.png')
         self.makeDamageBox()
+
     def update(self):
         super().update()
     def makeDamageBox(self):

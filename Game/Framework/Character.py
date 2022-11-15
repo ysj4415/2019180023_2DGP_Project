@@ -3,10 +3,6 @@ from Framework.Pawn import *
 import window_size
 import game_framework
 
-# def jumprange(jumpradian, jumppower, index):
-#     return jumppower * math.sin(jumpradian / 360 * 2 * math.pi) * index
-#
-#
 PIXEL_PER_METER = (10.0/ 0.3)
 
 
@@ -108,7 +104,6 @@ class character(pawn):
         self.position.translate.y += RUN_SPEED_PPS * game_framework.frame_time * self.y_tuple[self.floor_index] * dir
         self.position.translate.x = clamp(0, self.position.translate.x, window_size.width)
         self.position.translate.y = clamp(0, self.position.translate.y, window_size.height)
-
 
 
     def SetKET(self, key_event_table):

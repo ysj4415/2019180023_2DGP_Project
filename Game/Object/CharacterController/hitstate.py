@@ -42,8 +42,8 @@ class HitState:
         # nom.frame = (frame//20) % 2
         # frame += 1
 
-        nom.frame = (nom.frame + nom.frame_number * ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
-        nom.image_info[1] = nom.anim_type * nom.image_info[3]
+        # nom.frame = (nom.frame + nom.frame_number * ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
+        # nom.image_info[1] = nom.anim_type * nom.image_info[3]
 
         if time.time() - HitState.current_time > 1:
             if nom.dir == 0: nom.add_event(CC.GOTO_IDLE)
