@@ -50,7 +50,7 @@ class HitState:
             elif nom.dir != 0: nom.add_event(CC.GOTO_MOVE)
         elif time.time() - HitState.current_time < 0.2:
             nom.move(char_dir[nom.flip])
-            nom.jump()
+            nom.JUMP_SPEED_KMPH = 10
         # MainState.do(nom)
 
     @staticmethod
