@@ -27,6 +27,7 @@ class nom(character):
         self.RUN_SPEED_KMPH = RUN_SPEED_KMPH
         self.JUMP_SPEED_KMPH = JUMP_SPEED_KMPH
 
+        self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 15,32,15,20
     def restart(self):
         self.position.translate.x, self.position.translate.y = window_size.width / 2, ground
         self.position.rotate = 0
@@ -68,10 +69,8 @@ class nom(character):
         super().update()
         # self.cur_state.do(self)
 
-        damagebox = firering.damagebox + spike.damagebox
-        y = self.position.translate.y
-        for range in damagebox:
-            if range[0][0] <= self.position.translate.x <= range[1][0] and range[0][1] <= y - ground <= range[1][1]:
-                if self.cur_state != HitState: self.add_event(DAMAGE)
 
+    def handle_collision(self, other, group):
+        if self.cur_state != HitState: self.add_event(DAMAGE)
+        pass
 

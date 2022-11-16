@@ -12,6 +12,7 @@ class actor:
         self.flip = ''
         self.frame = 0
 
+        self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 0,0,0,0
 
         self.position.rotate = floor_index * 90 / 360 * 2 * math.pi
 
@@ -35,3 +36,7 @@ class actor:
                                         self.image_info[2], self.image_info[3],
                                         self.position.rotate, self.flip,
                                         x, y, size_x, size_y)
+        draw_rectangle(*self.get_bb())
+
+    def get_bb(self):
+        return self.position.translate.x - self.c_left_x, self.position.translate.y - self.c_bottom_y, self.position.translate.x + self.c_right_x, self.position.translate.y + self.c_top_y

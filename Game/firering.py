@@ -1,7 +1,6 @@
 from pico2d import *
 from Framework.Pawn import *
 
-damagebox = []
 
 ground = 50
 
@@ -19,11 +18,9 @@ class FireRing(pawn):
         else: self.step = step
 
         self.loadimage('res/character/monster_firering.png')
-        self.makeDamageBox()
-    def makeDamageBox(self):
-        x = self.position.translate.x
-        y = self.position.translate.y
-        damagebox.append(((x - 10, 0), (x + 10, y - 30)))
+
+        self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 5,50 + (step * 25),5,-17
+
     def update(self):
         super().update()
     def draw(self):
@@ -34,3 +31,5 @@ class FireRing(pawn):
                                            60, 100)
         super().draw()
 
+    def handle_collision(self, other, group):
+        pass
