@@ -39,4 +39,17 @@ class actor:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
+        if self.floor_index == 0:
+            return self.position.translate.x - self.c_left_x, self.position.translate.y - self.c_bottom_y, self.position.translate.x + self.c_right_x, self.position.translate.y + self.c_top_y
+
+        elif self.floor_index == 1:
+            return self.position.translate.x - self.c_top_y , self.position.translate.y - self.c_left_x, self.position.translate.x + self.c_bottom_y, self.position.translate.y + self.c_right_x
+
+        elif self.floor_index == 2:
+            return self.position.translate.x - self.c_right_x, self.position.translate.y - self.c_top_y, self.position.translate.x + self.c_left_x, self.position.translate.y + self.c_bottom_y
+
+        elif self.floor_index == 3:
+            return self.position.translate.x - self.c_bottom_y , self.position.translate.y - self.c_right_x, self.position.translate.x + self.c_top_y, self.position.translate.y + self.c_left_x
+
+
         return self.position.translate.x - self.c_left_x, self.position.translate.y - self.c_bottom_y, self.position.translate.x + self.c_right_x, self.position.translate.y + self.c_top_y
