@@ -27,7 +27,7 @@ class character(pawn):
         high = self.image_info[3] / 2
 
         if self.floor_index == 0:
-            if self.position.translate.y > high:
+            if self.position.translate.y > high + 10:
                 self.JUMP_SPEED_KMPH -= 1.0
             else:
                 self.JUMP_SPEED_KMPH = 0.0

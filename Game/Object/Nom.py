@@ -10,7 +10,7 @@ ACTION_PER_TIME = 1.0 / TIMER_PER_ACTION
 
 class nom(character):
     def __init__(self):
-        super().__init__(window_size.width / 2, ground, IdleState)
+        super().__init__(window_size.width / 2, ground + 10, IdleState)
         self.image_info = [0, 0, 64, 64]
         self.loadimage('res/character/PlayerCharacter.png')
         self.anim_type = 5
@@ -45,9 +45,6 @@ class nom(character):
 
 
     def wall_move(self, direction):
-        f_index = (self.floor_index + 1) % 4
-
-
         if(direction == 'left'):
             self.position.rotate -= 90 / 360 * 2 * math.pi
             self.floor_index = (self.floor_index - 1) % 4
@@ -69,6 +66,5 @@ class nom(character):
 
 
     def handle_collision(self, other, group):
-        if self.cur_state != HitState: self.add_event(DAMAGE)
-        pass
+        self.cur_state.handle_collision(self, other, group)
 

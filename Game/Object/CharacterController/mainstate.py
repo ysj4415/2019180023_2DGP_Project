@@ -32,3 +32,7 @@ class MainState:
     def draw(nom):
         f_index = (nom.floor_index + 1) % 4
         nom.draw()
+
+    def handle_collision(nom, other, group):
+        if group == 'nom:trap' or group == 'nom:monster':
+            if nom.cur_state != CC.HitState: nom.add_event(CC.DAMAGE)

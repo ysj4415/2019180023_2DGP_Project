@@ -13,11 +13,11 @@ class JumpState:
             nom.frame_speed = 30
             JumpState.jumprange = 10
             nom.JUMP_SPEED_KMPH = max_jumppower
+
         elif(event == CC.SPACE_UP):
             JumpState.jumprange -= 6
         nom.anim_type = 3
         nom.frame_number = 8
-
     @staticmethod
     def exit(nom):
         mainstate.MainState.exit(nom)
@@ -32,12 +32,6 @@ class JumpState:
         if JumpState.jumprange > 0: nom.JUMP_SPEED_KMPH = max_jumppower
 
         if nom.floor_index == 0:
-            if nom.position.translate.y == nom.image_info[3] / 2:
-                if nom.dir == 0:
-                    nom.add_event(CC.GOTO_IDLE)
-                elif nom.dir != 0:
-                    nom.add_event(CC.GOTO_MOVE)
-            # 벽에 부딪혔는지 체크
             if nom.position.translate.x >= window_size.width:
                 nom.wall_move('right')
                 pass
@@ -46,12 +40,6 @@ class JumpState:
                 pass
 
         elif nom.floor_index == 1:
-            if nom.position.translate.x == window_size.width - nom.image_info[3] / 2:
-                if nom.dir == 0:
-                    nom.add_event(CC.GOTO_IDLE)
-                elif nom.dir != 0:
-                    nom.add_event(CC.GOTO_MOVE)
-
             # 벽에 부딪혔는지 체크
             if nom.position.translate.y >= window_size.height:
                 nom.wall_move('right')
@@ -60,11 +48,6 @@ class JumpState:
                 nom.wall_move('left')
                 pass
         elif nom.floor_index == 2:
-            if nom.position.translate.y == window_size.height - nom.image_info[3] / 2:
-                if nom.dir == 0:
-                    nom.add_event(CC.GOTO_IDLE)
-                elif nom.dir != 0:
-                    nom.add_event(CC.GOTO_MOVE)
             # 벽에 부딪혔는지 체크
             if nom.position.translate.x >= window_size.width:
                 nom.wall_move('left')
@@ -73,12 +56,6 @@ class JumpState:
                 nom.wall_move('right')
                 pass
         elif nom.floor_index == 3:
-            if nom.position.translate.x == nom.image_info[3] / 2:
-                if nom.dir == 0:
-                    nom.add_event(CC.GOTO_IDLE)
-                elif nom.dir != 0:
-                    nom.add_event(CC.GOTO_MOVE)
-
             # 벽에 부딪혔는지 체크
             if nom.position.translate.y >= window_size.height:
                 nom.wall_move('left')
@@ -90,3 +67,11 @@ class JumpState:
     @staticmethod
     def draw(nom):
         mainstate.MainState.draw(nom)
+
+    def handle_collision(nom, other, group):
+        mainstate.MainState.handle_collision(nom, other, group)
+        if group == 'nom:floors':
+            if nom.dir == 0:
+                nom.add_event(CC.GOTO_IDLE)
+            elif nom.dir != 0:
+                nom.add_event(CC.GOTO_MOVE)

@@ -25,3 +25,6 @@ class RunState:
     @staticmethod
     def draw(nom):
         mainstate.MainState.draw(nom)
+
+    def handle_collision(nom, other, group):
+        mainstate.MainState.handle_collision(nom, other, group)
