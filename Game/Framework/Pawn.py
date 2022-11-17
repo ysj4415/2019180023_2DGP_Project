@@ -3,8 +3,8 @@ import game_framework
 
 class pawn(actor):
 
-    def __init__(self, x = 0, y = 0):
-        super().__init__(x, y)
+    def __init__(self, x = 0, y = 0, floor_index = 0):
+        super().__init__(x, y, floor_index)
         self.frame_number = 0
         self.TIMER_PER_ACTION = 0.5
 

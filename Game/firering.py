@@ -6,8 +6,16 @@ ground = 50
 
 class FireRing(pawn):
     image = None
-    def __init__(self, x, y, step):
-        super().__init__(x,y + (step * 25))
+    def __init__(self, x, y, step, floor_index):
+        if floor_index == 0:
+            super().__init__(x, y + (step * 25), floor_index)
+        elif floor_index == 1:
+            super().__init__(x - (step * 25), y, floor_index)
+        elif floor_index == 2:
+            super().__init__(x, y - (step * 25), floor_index)
+        elif floor_index == 3:
+            super().__init__(x + (step * 25), y, floor_index)
+
         self.image_info = [0, 0, 60, 100]
 
         self.frame_number = 2
@@ -24,11 +32,32 @@ class FireRing(pawn):
     def update(self):
         super().update()
     def draw(self):
-        for i in range(self.step):
-            self.image.clip_composite_draw(2 * 60, 0 * 100,
-                                           60, 100, 0, '',
-                                           self.position.translate.x, self.position.translate.y - 25 * (i + 1),
-                                           60, 100)
+        if self.floor_index == 0:
+            for i in range(self.step):
+                self.image.clip_composite_draw(2 * 60, 0 * 100,
+                                               60, 100, self.position.rotate, '',
+                                               self.position.translate.x, self.position.translate.y - 25 * (i + 1),
+                                               60, 100)
+        elif self.floor_index == 1:
+            for i in range(self.step):
+                self.image.clip_composite_draw(2 * 60, 0 * 100,
+                                               60, 100, self.position.rotate, '',
+                                               self.position.translate.x + 25 * (i + 1), self.position.translate.y,
+                                               60, 100)
+        elif self.floor_index == 2:
+            for i in range(self.step):
+                self.image.clip_composite_draw(2 * 60, 0 * 100,
+                                               60, 100, self.position.rotate, '',
+                                               self.position.translate.x, self.position.translate.y + 25 * (i + 1),
+                                               60, 100)
+        elif self.floor_index == 3:
+            for i in range(self.step):
+                self.image.clip_composite_draw(2 * 60, 0 * 100,
+                                               60, 100, self.position.rotate, '',
+                                               self.position.translate.x - 25 * (i + 1), self.position.translate.y,
+                                               60, 100)
+
+
         super().draw()
 
     def handle_collision(self, other, group):

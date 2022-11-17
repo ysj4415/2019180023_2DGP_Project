@@ -17,8 +17,9 @@ def enter():
     global image
 
     nom = Nom.nom()
-    firerings = [firering.FireRing(600,50, 2),
-               firering.FireRing(450,50, 1)]
+    firerings = [firering.FireRing(600,50, 2, 0),
+                 firering.FireRing(750, 400, 2, 1),
+               firering.FireRing(450,50, 1, 0)]
     spikes = [spike.Spike(200, 15, 0),
                spike.Spike(785, 200, 1)]
     game_world.add_object(nom, 0)
