@@ -1,8 +1,6 @@
 from Object.CharacterController.CharacterController import *
 from Framework.Character import *
 import window_size
-import firering
-import spike
 
 RUN_SPEED_KMPH = 20.0
 JUMP_SPEED_KMPH = 0.0
@@ -27,7 +25,7 @@ class nom(character):
         self.RUN_SPEED_KMPH = RUN_SPEED_KMPH
         self.JUMP_SPEED_KMPH = JUMP_SPEED_KMPH
 
-        self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 15,32,15,20
+        self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 10,32,10,20
     def restart(self):
         self.position.translate.x, self.position.translate.y = window_size.width / 2, ground
         self.position.rotate = 0

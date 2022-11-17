@@ -1,7 +1,6 @@
 import pico2d
-from Object import Nom
-import firering
-import spike
+from Object import Nom, spike, firering
+from Object.flower import Flower
 import game_framework
 import game_world
 
@@ -17,20 +16,23 @@ def enter():
     global image
 
     nom = Nom.nom()
-    firerings = [firering.FireRing(600,50, 2, 0),
+    firerings = [firering.FireRing(600, 50, 2, 0),
                  firering.FireRing(750, 400, 2, 1),
-               firering.FireRing(450,50, 1, 0)]
+                 firering.FireRing(450, 50, 1, 0)]
     spikes = [spike.Spike(200, 15, 0),
-               spike.Spike(785, 200, 1)]
+              spike.Spike(785, 200, 1)]
+    flowers = [Flower(300, 32, 0)]
     game_world.add_object(nom, 0)
     game_world.add_objects(firerings, 0)
     game_world.add_objects(spikes, 0)
+    game_world.add_objects(flowers, 0)
 
     running = True
     image = pico2d.load_image('res/map/map1.png')
 
     game_world.add_collision_pairs(nom, spikes, 'nom:spike')
     game_world.add_collision_pairs(nom, firerings, 'nom:firerings')
+    game_world.add_collision_pairs(nom, flowers, 'nom:flowers')
 
 # 종료
 def exit_state():
