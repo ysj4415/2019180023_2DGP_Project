@@ -73,6 +73,11 @@ class nom(character):
 
     def handle_collision(self, other, group):
         self.cur_state.handle_collision(self, other, group)
+        if group == 'nom:up_floors':
+            self.loadimage('res/character/PlayerCharacter_white.png')
+        else:
+            self.loadimage('res/character/PlayerCharacter.png')
+
 
     # def draw(self, x, y):
     #     super().draw( x, y)

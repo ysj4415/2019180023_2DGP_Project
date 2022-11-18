@@ -1,9 +1,6 @@
 import pico2d
 from Object import Nom, spike, firering
 from Object.low_floor import Low_Floor
-from Object.high_floor import High_Floor
-from Object.high_floor import High_Floor_up
-
 from Object.flower import Flower
 import game_framework
 import game_world
@@ -27,9 +24,6 @@ def enter():
     ui = Ui()
     nom = Nom.nom()
     floors = []
-    up_floors = []
-    up_floors_step = []
-
     for i in range(66,map_size[0],66):
         floors += [Low_Floor(i,5,0)]
     for i in range(66,map_size[0],66):
@@ -38,11 +32,8 @@ def enter():
         floors += [Low_Floor(5,i,3)]
     for i in range(66,map_size[1],66):
         floors += [Low_Floor(map_size[0] - 5 ,i,1)]
-    for i in range(66,133,66):
-        up_floors += [High_Floor(i + 500,68,0)]
-        up_floors_step += [High_Floor_up(i + 500,68,0)]
 
-    firerings = [firering.FireRing(800, 60, 2, 0),
+    firerings = [firering.FireRing(600, 60, 2, 0),
                  firering.FireRing(map_size[0] - 60, 600, 2, 1),
                  firering.FireRing(1100, 60, 1, 0)]
     spikes = [spike.Spike(1300, 25, 0),
@@ -50,27 +41,20 @@ def enter():
 
     flowers = [Flower(200, 42, 0)]
 
-    game_world.add_object(nom, 1)
+    game_world.add_object(nom, 0)
     game_world.add_objects(firerings, 0)
     game_world.add_objects(spikes, 0)
-    game_world.add_objects(flowers, 1)
+    game_world.add_objects(flowers, 0)
     game_world.add_objects(floors, 0)
-    game_world.add_objects(up_floors, 0)
-    game_world.add_objects(up_floors_step, 0)
-
 
     running = True
-    image = pico2d.load_image('res/map/map3.png')
+    image = pico2d.load_image('res/map/map2.png')
 
     trap = spikes + firerings
     game_world.add_collision_pairs(nom, trap, 'nom:trap')
     monster = flowers
     game_world.add_collision_pairs(nom, monster, 'nom:monster')
     game_world.add_collision_pairs(nom, floors, 'nom:floors')
-    game_world.add_collision_pairs(nom, up_floors, 'nom:up_floors')
-    game_world.add_collision_pairs(nom, up_floors_step, 'nom:up_floors_step')
-
-
 
 # 종료
 def exit_state():

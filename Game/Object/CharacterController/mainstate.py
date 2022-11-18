@@ -53,4 +53,21 @@ class MainState:
             elif nom.floor_index == 3:
                 nom.position.translate.x = nom.image_info[3] / 2 + other.image_info[3]
                 pass
-
+        if group == 'nom:up_floors_step':
+            if nom.position.translate.y > other.position.translate.y + 50:
+                nom.JUMP_SPEED_KMPH -= 0
+                if nom.floor_index == 0:
+                    nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3]
+                    pass
+                elif nom.floor_index == 1:
+                    nom.position.translate.x = map_size[0] - nom.image_info[3] / 2 - other.image_info[3]
+                    pass
+                elif nom.floor_index == 2:
+                    nom.position.translate.y = map_size[1] - nom.image_info[3] / 2 - other.image_info[3]
+                    pass
+                elif nom.floor_index == 3:
+                    nom.position.translate.x = nom.image_info[3] / 2 + other.image_info[3]
+                    pass
+            else:
+                if nom.floor_index == 0:
+                    nom.position.translate.y = other.image_info[3] - nom.image_info[3] / 2
