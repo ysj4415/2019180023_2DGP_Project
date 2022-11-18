@@ -27,7 +27,7 @@ class actor:
     def update(self):
         pass
 
-    def draw(self):
+    def draw(self, camera_x1, camera_y1):
         x = self.position.translate.x
         y = self.position.translate.y
         size_x = self.image_info[2] * self.position.scale.x
@@ -35,9 +35,9 @@ class actor:
         self.image.clip_composite_draw(int(self.frame) * self.image_info[2], self.image_info[1],
                                         self.image_info[2], self.image_info[3],
                                         self.position.rotate, self.flip,
-                                        x, y, size_x, size_y)
-        draw_rectangle(*self.get_bb())
-
+                                        x - camera_x1, y - camera_y1, size_x, size_y)
+        bb = self.get_bb()
+        draw_rectangle(bb[0]- camera_x1, bb[1]-camera_y1, bb[2]-camera_x1, bb[3]-camera_y1)
     def get_bb(self):
         if self.floor_index == 0:
             return self.position.translate.x - self.c_left_x, self.position.translate.y - self.c_bottom_y, self.position.translate.x + self.c_right_x, self.position.translate.y + self.c_top_y

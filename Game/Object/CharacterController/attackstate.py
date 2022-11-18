@@ -11,8 +11,8 @@ class AttackState:
             # mainstate.MainState.enter(nom, event)
             nom.anim_type = 1
             nom.frame_number = 3
-            nom.frame_count = 0
-        nom.frame_speed = 30
+            nom.frame = 0
+
 
     @staticmethod
     def exit(nom):
@@ -22,8 +22,7 @@ class AttackState:
     def do(nom):
         # nom.frame = (nom.frame + nom.frame_number * Nom.ACTION_PER_TIME * game_framework.frame_time) % nom.frame_number
         # nom.image_info[1] = nom.anim_type * nom.image_info[3]
-
-        if nom.frame_count // nom.frame_speed > 2:
+        if nom.frame >= nom.frame_number - 0.01:
             if nom.dir == 0: nom.add_event(CC.GOTO_IDLE)
             elif nom.dir != 0: nom.add_event(CC.GOTO_MOVE)
 
@@ -33,4 +32,4 @@ class AttackState:
         mainstate.MainState.draw(nom)
 
     def handle_collision(nom, other, group):
-        mainstate.handle_collision(nom, other, group)
+        mainstate.MainState.handle_collision(nom, other, group)

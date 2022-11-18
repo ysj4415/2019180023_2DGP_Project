@@ -1,6 +1,10 @@
 from Object.CharacterController.CharacterController import *
 from Framework.Character import *
 import window_size
+from UI import Life
+import game_framework
+
+
 
 RUN_SPEED_KMPH = 20.0
 JUMP_SPEED_KMPH = 0.0
@@ -20,7 +24,7 @@ class nom(character):
 
         self.SetKET(key_event_table)
         self.SetNST(next_state_table)
-        self. life = 3
+        # self. life = 3
 
         self.RUN_SPEED_KMPH = RUN_SPEED_KMPH
         self.JUMP_SPEED_KMPH = JUMP_SPEED_KMPH
@@ -32,7 +36,7 @@ class nom(character):
         self.jumpradian = 0
         self.rotation_radian = 0 / 360 * 2 * math.pi
         self.floor_index = 0
-        self. life = 3
+        Life.life = 3
 
         self.speed = 0
         self.flip = ''
@@ -45,6 +49,8 @@ class nom(character):
 
 
     def wall_move(self, direction):
+        map_size = game_framework.stack[-1].map_size
+
         if(direction == 'left'):
             self.position.rotate -= 90 / 360 * 2 * math.pi
             self.floor_index = (self.floor_index - 1) % 4
@@ -56,8 +62,8 @@ class nom(character):
         self.position.translate.x = self.position.translate.x * x_tuple[(self.floor_index) % 2]
         self.position.translate.y = self.position.translate.y * y_tuple[(self.floor_index) % 2]
 
-        self.position.translate.x = (self.position.translate.x + (ground * x_tuple[(self.floor_index + 1) % 4])) % window_size.width
-        self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % window_size.height
+        self.position.translate.x = (self.position.translate.x + (ground * x_tuple[(self.floor_index + 1) % 4])) % map_size[0]
+        self.position.translate.y = (self.position.translate.y + (ground * y_tuple[(self.floor_index + 1) % 4])) % map_size[1]
 
 
     def update(self):
@@ -67,4 +73,9 @@ class nom(character):
 
     def handle_collision(self, other, group):
         self.cur_state.handle_collision(self, other, group)
+
+    # def draw(self, x, y):
+    #     super().draw( x, y)
+    #     print('1')
+
 

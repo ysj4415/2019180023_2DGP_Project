@@ -3,6 +3,7 @@ from Object.CharacterController import CharacterController as CC
 import game_framework
 from Object import Nom
 import time
+from UI import Life
 
 dir = None
 char_dir = {'': -1, 'h': 1}
@@ -24,8 +25,8 @@ class HitState:
             nom.jumppower = 3
             # nom.position.translate.y = 32
 
-            nom.life -= 1
-            if nom.life == 0:
+            Life.life -= 1
+            if Life.life == 0:
                 nom.restart()
             nom.frame_count = 0
             nom.frame_speed = 20

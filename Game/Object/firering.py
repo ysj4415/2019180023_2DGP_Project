@@ -31,34 +31,34 @@ class FireRing(pawn):
 
     def update(self):
         super().update()
-    def draw(self):
+    def draw(self, camera_x1, camera_y1):
         if self.floor_index == 0:
             for i in range(self.step):
                 self.image.clip_composite_draw(2 * 60, 0 * 100,
                                                60, 100, self.position.rotate, '',
-                                               self.position.translate.x, self.position.translate.y - 25 * (i + 1),
+                                               self.position.translate.x -camera_x1, self.position.translate.y - camera_y1 - 25 * (i + 1),
                                                60, 100)
         elif self.floor_index == 1:
             for i in range(self.step):
                 self.image.clip_composite_draw(2 * 60, 0 * 100,
                                                60, 100, self.position.rotate, '',
-                                               self.position.translate.x + 25 * (i + 1), self.position.translate.y,
+                                               self.position.translate.x + 25 * (i + 1) - camera_x1, self.position.translate.y - camera_y1,
                                                60, 100)
         elif self.floor_index == 2:
             for i in range(self.step):
                 self.image.clip_composite_draw(2 * 60, 0 * 100,
                                                60, 100, self.position.rotate, '',
-                                               self.position.translate.x, self.position.translate.y + 25 * (i + 1),
+                                               self.position.translate.x - camera_x1, self.position.translate.y + 25 * (i + 1) - camera_y1,
                                                60, 100)
         elif self.floor_index == 3:
             for i in range(self.step):
                 self.image.clip_composite_draw(2 * 60, 0 * 100,
                                                60, 100, self.position.rotate, '',
-                                               self.position.translate.x - 25 * (i + 1), self.position.translate.y,
+                                               self.position.translate.x - 25 * (i + 1) - camera_x1, self.position.translate.y - camera_y1,
                                                60, 100)
 
 
-        super().draw()
+        super().draw(camera_x1, camera_y1)
 
     def handle_collision(self, other, group):
         pass

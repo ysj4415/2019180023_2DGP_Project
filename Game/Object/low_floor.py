@@ -11,7 +11,6 @@ class Low_Floor(actor):
         self.loadimage('res/map/floor/low_floor.png')
 
         self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 66,5,66,5
-
     def update(self):
         super().update()
 
