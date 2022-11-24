@@ -40,7 +40,6 @@ class MainState:
             if nom.cur_state != CC.HitState: nom.add_event(CC.DAMAGE)
 
         if group == 'nom:floors':
-            nom.JUMP_SPEED_KMPH -= 0
             if nom.floor_index == 0:
                 nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3]
                 pass
@@ -70,4 +69,5 @@ class MainState:
                     pass
             else:
                 if nom.floor_index == 0:
-                    nom.position.translate.y = other.image_info[3] - nom.image_info[3] / 2
+                    nom.JUMP_SPEED_KMPH = 1
+                    nom.position.translate.y = other.position.translate.y + other.c_bottom_y - nom.image_info[3] / 2

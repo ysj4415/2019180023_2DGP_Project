@@ -33,7 +33,7 @@ class JumpState:
         mainstate.MainState.do(nom)
 
         JumpState.jumprange -= 0.1
-        if JumpState.jumprange > 0: nom.JUMP_SPEED_KMPH = max_jumppower
+        if JumpState.jumprange > 0 and nom.JUMP_SPEED_KMPH > 1: nom.JUMP_SPEED_KMPH = max_jumppower
         # if nom.floor_index == 0:
         #     if nom.position.translate.x >= window_size.width:
         #         nom.wall_move('right')
@@ -86,7 +86,6 @@ class JumpState:
             elif other.floor_index == (nom.floor_index - 1) % 4:
                 nom.wall_move('left')
 
-            nom.JUMP_SPEED_KMPH -= 0
 
             if nom.floor_index == 0:
                 nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3]
@@ -109,7 +108,6 @@ class JumpState:
                         nom.add_event(CC.GOTO_MOVE)
 
 
-                nom.JUMP_SPEED_KMPH -= 0
 
                 if nom.floor_index == 0:
                     nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3]
