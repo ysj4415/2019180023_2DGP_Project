@@ -31,12 +31,12 @@ class character(pawn):
 
     def jump(self):
         high = self.image_info[3] / 2
-
         JUMP_SPEED_MPM = (self.JUMP_SPEED_KMPH * 1000.0 / 60.0)
         JUMP_SPEED_MPS = (JUMP_SPEED_MPM / 60.0)
         JUMP_SPEED_PPS = (JUMP_SPEED_MPS * PIXEL_PER_METER)
 
         speed = JUMP_SPEED_PPS * game_framework.frame_time
+
         if self.floor_index == 0:
             self.position.translate.y += speed
             pass

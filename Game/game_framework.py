@@ -19,10 +19,10 @@ stack = None
 def change_state(state):
     global stack
     if len(stack) > 0:
-        stack[-1].exit_state
+        stack[-1].exit_state()
         stack.pop()
     stack.append(state)
-    stack.enter()
+    state.enter()
 
 def push_state(state):
     global stack
@@ -51,15 +51,15 @@ def run(start_state):
     running = True
     stack = [start_state]
     start_state.enter()
-    current_time = time.time()
 
-    current_time = time.time()
     while(running):
+        current_time = time.time()
+
         stack[-1].handle_events()
         stack[-1].update()
         stack[-1].draw()
         frame_time = time.time() - current_time
-        current_time += frame_time
+        # current_time += frame_time
     while(len(stack) > 0):
         stack[-1].exit_state()
         stack.pop()

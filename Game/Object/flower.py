@@ -10,6 +10,8 @@ class Flower(pawn):
         self.image_info = [0, 0, 64, 64]
         self.loadimage('res/character/monster_flower.png')
 
+        self.SetStartTran()
+
         self.frame_number = 2
         self.anim_type = 0
 

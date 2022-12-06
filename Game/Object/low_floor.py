@@ -1,6 +1,7 @@
 from pico2d import *
 from Framework.Actor import *
 
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 
 ground = 15
 

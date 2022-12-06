@@ -1,5 +1,9 @@
 from pico2d import *
 from Framework.Transform import *
+import camera
+import play_state
+
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 
 class actor:
     image = None
@@ -27,7 +31,9 @@ class actor:
     def update(self):
         pass
 
-    def draw(self, camera_x1, camera_y1):
+    def draw(self):
+        camera_x1, camera_x2, camera_y1, camera_y2 = camera.get_camera()
+
         x = self.position.translate.x
         y = self.position.translate.y
         size_x = self.image_info[2] * self.position.scale.x
@@ -53,3 +59,24 @@ class actor:
 
 
         return self.position.translate.x - self.c_left_x, self.position.translate.y - self.c_bottom_y, self.position.translate.x + self.c_right_x, self.position.translate.y + self.c_top_y
+
+    def SetStartTran(self):
+        if self.floor_index == 0:
+            self.position.translate.x = self.position.translate.x  * PIXEL_PER_METER
+            self.position.translate.y = self.position.translate.y  * PIXEL_PER_METER + self.image_info[3] / 2 + 10
+
+        elif self.floor_index == 1:
+            self.position.translate.x = play_state.map_size[0] - (self.position.translate.x  * PIXEL_PER_METER + self.image_info[3] / 2 + 10)
+            self.position.translate.y = self.position.translate.y  * PIXEL_PER_METER
+            pass
+        elif self.floor_index == 2:
+            self.position.translate.x = play_state.map_size[0] - self.position.translate.x  * PIXEL_PER_METER
+            self.position.translate.y = play_state.map_size[1] - (self.position.translate.y  * PIXEL_PER_METER + self.image_info[3] / 2 + 10)
+            pass
+
+        elif self.floor_index == 3:
+            self.position.translate.x = (self.position.translate.x  * PIXEL_PER_METER + self.image_info[3] / 2 + 10)
+            self.position.translate.y = play_state.map_size[1] - (self.position.translate.y  * PIXEL_PER_METER)
+            pass
+
+        pass

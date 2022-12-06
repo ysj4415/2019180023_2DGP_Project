@@ -100,7 +100,7 @@ class JumpState:
                 nom.position.translate.x = nom.image_info[3] / 2 + other.image_info[3]
                 pass
         if group == 'nom:up_floors_step' and nom.JUMP_SPEED_KMPH < 0:
-            if nom.position.translate.y > other.image_info[3]:
+            if nom.position.translate.y > other.image_info[3] +10:
                 if other.floor_index == nom.floor_index:
                     if nom.dir == 0:
                         nom.add_event(CC.GOTO_IDLE)
@@ -110,7 +110,7 @@ class JumpState:
 
 
                 if nom.floor_index == 0:
-                    nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3]
+                    nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3] + 10
                     pass
                 elif nom.floor_index == 1:
                     nom.position.translate.x = map_size[0] - nom.image_info[3] / 2 - other.image_info[3]

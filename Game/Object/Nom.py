@@ -4,6 +4,7 @@ import window_size
 from UI import Life
 import game_framework
 
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 
 
 RUN_SPEED_KMPH = 20.0
@@ -14,7 +15,7 @@ ACTION_PER_TIME = 1.0 / TIMER_PER_ACTION
 
 class nom(character):
     def __init__(self):
-        super().__init__(window_size.width / 2, ground + 10, IdleState)
+        super().__init__(window_size.width / 2, (ground + 10), IdleState)
         self.image_info = [0, 0, 64, 64]
         self.loadimage('res/character/PlayerCharacter.png')
         self.anim_type = 5
@@ -28,6 +29,9 @@ class nom(character):
 
         self.RUN_SPEED_KMPH = RUN_SPEED_KMPH
         self.JUMP_SPEED_KMPH = JUMP_SPEED_KMPH
+
+        self.sound = load_wav('res/Windshield Hit With Bar.wav')
+        self.sound.set_volume(25)
 
         self.c_left_x, self.c_bottom_y, self.c_right_x, self.c_top_y = 10,32,10,20
     def restart(self):

@@ -1,6 +1,6 @@
 # layer 0: 뒷면 오브젝트
 # layer 1: 앞면 오브젝트
-objects = [[], []]
+objects = [[], [], []]
 
 collision_group = dict()
 
@@ -12,6 +12,7 @@ def add_objects(ol, depth):
     objects[depth] += ol
 
 def remove_object(o):
+    global collision_group
     for layer in objects:
         if o in layer:
             layer.remove(o)
@@ -19,6 +20,7 @@ def remove_object(o):
 
             del o
             return
+
     raise ValueError('존재하지 않는 object 입니다.')
 
 def all_objects():
@@ -27,10 +29,13 @@ def all_objects():
             yield o
 
 def clear():
+    global collision_group
+
     for o in all_objects():
         del o
     for layer in objects:
         layer.clear()
+    collision_group = dict()
 
 def add_collision_pairs(a, b, group):
     if group not in collision_group:

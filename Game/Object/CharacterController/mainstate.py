@@ -38,6 +38,7 @@ class MainState:
 
         if group == 'nom:trap' or group == 'nom:monster':
             if nom.cur_state != CC.HitState: nom.add_event(CC.DAMAGE)
+            nom.sound.play()
 
         if group == 'nom:floors':
             if nom.floor_index == 0:
@@ -53,20 +54,12 @@ class MainState:
                 nom.position.translate.x = nom.image_info[3] / 2 + other.image_info[3]
                 pass
         if group == 'nom:up_floors_step':
-            if nom.position.translate.y > other.position.translate.y + 50:
+            if nom.position.translate.y > other.position.translate.y + 50 + 10:
                 nom.JUMP_SPEED_KMPH -= 0
                 if nom.floor_index == 0:
-                    nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3]
+                    nom.position.translate.y = nom.image_info[3] / 2 + other.image_info[3] + 10
                     pass
-                elif nom.floor_index == 1:
-                    nom.position.translate.x = map_size[0] - nom.image_info[3] / 2 - other.image_info[3]
-                    pass
-                elif nom.floor_index == 2:
-                    nom.position.translate.y = map_size[1] - nom.image_info[3] / 2 - other.image_info[3]
-                    pass
-                elif nom.floor_index == 3:
-                    nom.position.translate.x = nom.image_info[3] / 2 + other.image_info[3]
-                    pass
+
             else:
                 if nom.floor_index == 0:
                     nom.JUMP_SPEED_KMPH = 1
